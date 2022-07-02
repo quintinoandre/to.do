@@ -15,3 +15,13 @@ model Users {
 
   @@map("users")
 }
+
+model Todos {
+  id        String    @id @default(uuid())
+  title     String
+  done      Boolean   @default(false)
+  deadline  DateTime?
+  createdAt DateTime  @default(now())
+
+  @@map("todos")
+}
