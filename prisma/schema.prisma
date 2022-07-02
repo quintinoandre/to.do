@@ -12,6 +12,7 @@ model Users {
   name     String?
   email    String  @unique
   password String
+  Todos    Todos[]
 
   @@map("users")
 }
@@ -22,6 +23,8 @@ model Todos {
   done      Boolean   @default(false)
   deadline  DateTime?
   createdAt DateTime  @default(now())
+  userId    String
+  user      Users     @relation(fields: [userId], references: [id])
 
   @@map("todos")
 }
