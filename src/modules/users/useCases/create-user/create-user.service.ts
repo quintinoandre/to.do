@@ -1,4 +1,5 @@
 import { hash } from 'bcrypt';
+import { STATUS_CODES } from 'http';
 
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 
@@ -20,8 +21,9 @@ class CreateUserService {
 		if (userExists)
 			throw new HttpException(
 				{
-					status: 'error',
+					statusCode: HttpStatus.BAD_REQUEST,
 					message: 'User already exists',
+					error: STATUS_CODES[HttpStatus.BAD_REQUEST],
 				},
 				HttpStatus.BAD_REQUEST
 			);
