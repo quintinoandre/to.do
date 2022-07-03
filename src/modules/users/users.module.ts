@@ -7,9 +7,16 @@ import {
 	CreateUserController,
 	CreateUserService,
 } from './useCases/create-user';
+import { FindUserController, FindUserService } from './useCases/find-user';
 
 @Module({
-	controllers: [CreateUserController],
-	providers: [PrismaService, UsersRepository, CreateUserService],
+	controllers: [CreateUserController, FindUserController],
+	providers: [
+		PrismaService,
+		UsersRepository,
+		CreateUserService,
+		FindUserService,
+	],
+	exports: [UsersRepository],
 })
 export class UsersModule {}
