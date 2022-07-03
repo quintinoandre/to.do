@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-class ICreateUserDTO {
+class CreateUserDTO {
 	@IsString()
 	@IsOptional()
 	name?: string;
@@ -13,4 +13,4 @@ class ICreateUserDTO {
 	password: string;
 }
 
-export { ICreateUserDTO };
+export { CreateUserDTO };

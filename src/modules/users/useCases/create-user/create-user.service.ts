@@ -3,7 +3,7 @@ import { STATUS_CODES } from 'http';
 
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 
-import { ICreateUserDTO } from '../../dtos';
+import { CreateUserDTO } from '../../dtos';
 import { UsersRepository } from '../../infra/prisma/repositories';
 import { UserMap } from '../../mappers';
 import { IUsersRepository } from '../../repositories';
@@ -15,10 +15,10 @@ class CreateUserService {
 		private readonly usersRepository: IUsersRepository
 	) {}
 
-	async execute(data: ICreateUserDTO): Promise<UserMap> {
+	async execute(data: CreateUserDTO): Promise<UserMap> {
 		const userExists = await this.usersRepository.findByEmail(data.email);
 
-		if (userExists)
+		if (userExists) {
 			throw new HttpException(
 				{
 					statusCode: HttpStatus.BAD_REQUEST,
@@ -27,6 +27,7 @@ class CreateUserService {
 				},
 				HttpStatus.BAD_REQUEST
 			);
+		}
 
 		const SALT_OR_ROUNDS = 10;
 

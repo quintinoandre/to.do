@@ -3,7 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserController } from './create-user.controller';
 import { CreateUserService } from './create-user.service';
 
-describe('UsersController', () => {
+describe('CreateUserController', () => {
 	let controller: CreateUserController;
 
 	beforeEach(async () => {
