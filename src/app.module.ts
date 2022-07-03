@@ -10,12 +10,6 @@ import { UsersModule } from './modules/users';
 @Module({
 	imports: [UsersModule, AuthModule],
 	controllers: [AppController],
-	providers: [
-		AppService,
-		{
-			provide: APP_GUARD,
-			useClass: JwtAuthGuard,
-		},
-	],
+	providers: [AppService, { provide: APP_GUARD, useClass: JwtAuthGuard }],
 })
 export class AppModule {}

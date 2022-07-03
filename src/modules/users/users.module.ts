@@ -13,21 +13,27 @@ import {
 } from './useCases/delete-user';
 import { FindUserController, FindUserService } from './useCases/find-user';
 import { FindUsersController, FindUsersService } from './useCases/find-users';
+import {
+	UpdateUserController,
+	UpdateUserService,
+} from './useCases/update-user';
 
 @Module({
 	controllers: [
 		CreateUserController,
+		DeleteUserController,
 		FindUserController,
 		FindUsersController,
-		DeleteUserController,
+		UpdateUserController,
 	],
 	providers: [
 		PrismaService,
 		UsersRepository,
 		CreateUserService,
+		DeleteUserService,
 		FindUserService,
 		FindUsersService,
-		DeleteUserService,
+		UpdateUserService,
 	],
 	exports: [UsersRepository],
 })

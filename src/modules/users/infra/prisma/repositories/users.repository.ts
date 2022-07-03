@@ -1,8 +1,10 @@
+import { hash } from 'bcrypt';
 import {
 	CreateUserDTO,
 	DeleteUserDTO,
 	FindUserDTO,
 } from 'src/modules/users/dtos';
+import { UpdateUserDTO } from 'src/modules/users/dtos';
 import { IUserEntity } from 'src/modules/users/entities';
 import { IUsersRepository } from 'src/modules/users/repositories';
 import { PrismaService } from 'src/shared/infra/prisma';
@@ -36,6 +38,47 @@ class UsersRepository implements IUsersRepository {
 
 	async findAll(): Promise<IUserEntity[]> {
 		return await this.prisma.users.findMany();
+	}
+
+	async update(id: string, data: UpdateUserDTO): Promise<IUserEntity> {
+		const user = await this.findById({ id });
+
+		const dataToUpdate: UpdateUserDTO = {};
+
+		if (
+			data.name &&
+			data.name !== null &&
+			data.name !== undefined &&
+			data.name !== user.name
+		) {
+			dataToUpdate.name = data.name;
+		}
+
+		if (
+			data.email &&
+			data.email !== null &&
+			data.email !== undefined &&
+			data.email !== user.email
+		) {
+			dataToUpdate.email = data.email;
+		}
+
+		if (
+			data.password &&
+			data.password !== null &&
+			data.password !== undefined
+		) {
+			const SALT_OR_ROUNDS = 10;
+
+			const passwordHash = await hash(data.password, SALT_OR_ROUNDS);
+
+			dataToUpdate.password = passwordHash;
+		}
+
+		return await this.prisma.users.update({
+			where: { id },
+			data: { ...dataToUpdate },
+		});
 	}
 }
 
