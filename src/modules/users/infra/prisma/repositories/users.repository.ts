@@ -1,4 +1,8 @@
-import { CreateUserDTO, FindUserDTO } from 'src/modules/users/dtos';
+import {
+	CreateUserDTO,
+	DeleteUserDTO,
+	FindUserDTO,
+} from 'src/modules/users/dtos';
 import { IUserEntity } from 'src/modules/users/entities';
 import { IUsersRepository } from 'src/modules/users/repositories';
 import { PrismaService } from 'src/shared/infra/prisma';
@@ -14,6 +18,12 @@ class UsersRepository implements IUsersRepository {
 
 	async create(data: CreateUserDTO): Promise<IUserEntity> {
 		return await this.prisma.users.create({ data });
+	}
+
+	async delete({ id }: DeleteUserDTO): Promise<void> {
+		await this.prisma.users.delete({ where: { id } });
+
+		return;
 	}
 
 	async findById({ id }: FindUserDTO): Promise<IUserEntity> {

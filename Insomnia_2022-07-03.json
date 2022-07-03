@@ -1,13 +1,13 @@
 {
 	"_type": "export",
 	"__export_format": 4,
-	"__export_date": "2022-07-03T14:30:58.013Z",
+	"__export_date": "2022-07-03T14:55:35.720Z",
 	"__export_source": "insomnia.desktop.app:v2021.7.2",
 	"resources": [
 		{
 			"_id": "req_c5c92c7d7f454799ae353e24f6e2e2e5",
 			"parentId": "fld_b1f22a7637264b259ebabd30383dc33e",
-			"modified": 1656858628765,
+			"modified": 1656859829064,
 			"created": 1656839945494,
 			"url": "{{ _.baseURL }}/login",
 			"name": "Login",
@@ -26,7 +26,7 @@
 				}
 			],
 			"authentication": {},
-			"metaSortKey": -1656839945494,
+			"metaSortKey": 0,
 			"isPrivate": false,
 			"settingStoreCookies": true,
 			"settingSendCookies": true,
@@ -39,13 +39,13 @@
 		{
 			"_id": "fld_b1f22a7637264b259ebabd30383dc33e",
 			"parentId": "wrk_d61606edd2dc40a7889feeb831395588",
-			"modified": 1656839933322,
+			"modified": 1656859829048,
 			"created": 1656839933322,
 			"name": "Auth",
 			"description": "",
 			"environment": {},
 			"environmentPropertyOrder": null,
-			"metaSortKey": -1656839933322,
+			"metaSortKey": 0,
 			"_type": "request_group"
 		},
 		{
@@ -61,7 +61,7 @@
 		{
 			"_id": "req_86502a4be08746a0b9b9daaf8fdb8a71",
 			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1656858626029,
+			"modified": 1656859829065,
 			"created": 1656777939166,
 			"url": "{{ _.baseURL }}/{{ _.resource_users }}",
 			"name": "create",
@@ -93,19 +93,25 @@
 		{
 			"_id": "fld_fbb541ae56524947853809cc63561add",
 			"parentId": "wrk_d61606edd2dc40a7889feeb831395588",
-			"modified": 1656855296097,
+			"modified": 1656859848301,
 			"created": 1656781491627,
 			"name": "Users",
 			"description": "",
-			"environment": { "resource_users": "users", "resource_one": "one" },
-			"environmentPropertyOrder": { "&": ["resource_users", "resource_one"] },
-			"metaSortKey": 0,
+			"environment": {
+				"resource_users": "users",
+				"resource_one": "one",
+				"resource_all": "all"
+			},
+			"environmentPropertyOrder": {
+				"&": ["resource_users", "resource_one", "resource_all"]
+			},
+			"metaSortKey": 100,
 			"_type": "request_group"
 		},
 		{
 			"_id": "req_84d2310da29440d1900286207eda960f",
 			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1656858626464,
+			"modified": 1656859871728,
 			"created": 1656782379549,
 			"url": "{{ _.baseURL }}/{{ _.resource_users }}/{{ _.resource_one }}",
 			"name": "find",
@@ -119,6 +125,32 @@
 				"token": "{% response 'body', 'req_c5c92c7d7f454799ae353e24f6e2e2e5', 'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'always', 60 %}"
 			},
 			"metaSortKey": 100,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
+		},
+		{
+			"_id": "req_9c0d6c7675554b488aa9403114e4e39e",
+			"parentId": "fld_fbb541ae56524947853809cc63561add",
+			"modified": 1656859883954,
+			"created": 1656859814424,
+			"url": "{{ _.baseURL }}/{{ _.resource_users }}/{{ _.resource_all }}",
+			"name": "find all",
+			"description": "",
+			"method": "GET",
+			"body": {},
+			"parameters": [],
+			"headers": [],
+			"authentication": {
+				"type": "bearer",
+				"token": "{% response 'body', 'req_c5c92c7d7f454799ae353e24f6e2e2e5', 'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'always', 60 %}"
+			},
+			"metaSortKey": 200,
 			"isPrivate": false,
 			"settingStoreCookies": true,
 			"settingSendCookies": true,
