@@ -13,7 +13,7 @@ class UpdateUserService {
 	) {}
 
 	async execute(id: string, data: UpdateUserDTO): Promise<UserMap> {
-		const user = await this.usersRepository.update(id, data);
+		const user = await this.usersRepository.updateUser(id, data);
 
 		return UserMap.toDTO(user);
 	}

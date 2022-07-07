@@ -14,7 +14,7 @@ class FindUserController {
 	@Get('one')
 	@Roles(Role.User)
 	async handle(@CurrentUser() { id }: IUserEntity): Promise<UserMap> {
-		return await this.findUserService.execute({ id });
+		return await this.findUserService.execute(id);
 	}
 }
 

@@ -1,13 +1,13 @@
 {
 	"_type": "export",
 	"__export_format": 4,
-	"__export_date": "2022-07-03T16:44:35.206Z",
-	"__export_source": "insomnia.desktop.app:v2021.7.2",
+	"__export_date": "2022-07-07T22:55:48.765Z",
+	"__export_source": "insomnia.desktop.app:v2022.4.2",
 	"resources": [
 		{
 			"_id": "req_c5c92c7d7f454799ae353e24f6e2e2e5",
 			"parentId": "fld_b1f22a7637264b259ebabd30383dc33e",
-			"modified": 1656866626568,
+			"modified": 1657234485262,
 			"created": 1656839945494,
 			"url": "{{ _.baseURL }}/login",
 			"name": "Login",
@@ -39,7 +39,7 @@
 		{
 			"_id": "fld_b1f22a7637264b259ebabd30383dc33e",
 			"parentId": "wrk_d61606edd2dc40a7889feeb831395588",
-			"modified": 1656859829048,
+			"modified": 1657228467847,
 			"created": 1656839933322,
 			"name": "Auth",
 			"description": "",
@@ -59,88 +59,9 @@
 			"_type": "workspace"
 		},
 		{
-			"_id": "req_a22879bd03f04c84bbb19215a00e2644",
-			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1656866647657,
-			"created": 1656865900481,
-			"url": "{{ _.baseURL }}/{{ _.resource_users }}",
-			"name": "update",
-			"description": "",
-			"method": "PATCH",
-			"body": {
-				"mimeType": "application/json",
-				"text": "{\n\t\"password\": \"123\"\n}"
-			},
-			"parameters": [],
-			"headers": [
-				{
-					"name": "Content-Type",
-					"value": "application/json",
-					"id": "pair_c603cbbddba54da3a42b57070dce86b5"
-				}
-			],
-			"authentication": {
-				"type": "bearer",
-				"token": "{% response 'body', 'req_c5c92c7d7f454799ae353e24f6e2e2e5', 'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'always', 60 %}"
-			},
-			"metaSortKey": -1656865900481,
-			"isPrivate": false,
-			"settingStoreCookies": true,
-			"settingSendCookies": true,
-			"settingDisableRenderRequestBody": false,
-			"settingEncodeUrl": true,
-			"settingRebuildPath": true,
-			"settingFollowRedirects": "global",
-			"_type": "request"
-		},
-		{
-			"_id": "fld_fbb541ae56524947853809cc63561add",
-			"parentId": "wrk_d61606edd2dc40a7889feeb831395588",
-			"modified": 1656861620546,
-			"created": 1656781491627,
-			"name": "Users",
-			"description": "",
-			"environment": {
-				"resource_users": "users",
-				"resource_one": "one",
-				"resource_all": "all"
-			},
-			"environmentPropertyOrder": {
-				"&": ["resource_users", "resource_one", "resource_all"]
-			},
-			"metaSortKey": 100,
-			"_type": "request_group"
-		},
-		{
-			"_id": "req_177b9228ff0c426fbbeb49f08f84beec",
-			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1656866644518,
-			"created": 1656861522838,
-			"url": "{{ _.baseURL }}/{{ _.resource_users }}/5f002ead-0abf-47e0-a78d-ab7fff32b74c",
-			"name": "delete",
-			"description": "",
-			"method": "DELETE",
-			"body": {},
-			"parameters": [],
-			"headers": [],
-			"authentication": {
-				"type": "bearer",
-				"token": "{% response 'body', 'req_c5c92c7d7f454799ae353e24f6e2e2e5', 'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'always', 60 %}"
-			},
-			"metaSortKey": -1656861522839,
-			"isPrivate": false,
-			"settingStoreCookies": true,
-			"settingSendCookies": true,
-			"settingDisableRenderRequestBody": false,
-			"settingEncodeUrl": true,
-			"settingRebuildPath": true,
-			"settingFollowRedirects": "global",
-			"_type": "request"
-		},
-		{
 			"_id": "req_86502a4be08746a0b9b9daaf8fdb8a71",
 			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1656866658397,
+			"modified": 1657234485834,
 			"created": 1656777939166,
 			"url": "{{ _.baseURL }}/{{ _.resource_users }}",
 			"name": "create",
@@ -148,7 +69,7 @@
 			"method": "POST",
 			"body": {
 				"mimeType": "application/json",
-				"text": "{\n\t\"name\": \"andre\",\n\t\"email\": \"andre@mail.com\",\n\t\"password\": \"123\"\n}"
+				"text": "{\n\t\"name\": \"teste\",\n\t\"email\": \"teste@mail.com\",\n\t\"password\": \"123\"\n}"
 			},
 			"parameters": [],
 			"headers": [
@@ -170,14 +91,38 @@
 			"_type": "request"
 		},
 		{
-			"_id": "req_84d2310da29440d1900286207eda960f",
-			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1656866663433,
-			"created": 1656782379549,
-			"url": "{{ _.baseURL }}/{{ _.resource_users }}/{{ _.resource_one }}",
-			"name": "find",
+			"_id": "fld_fbb541ae56524947853809cc63561add",
+			"parentId": "wrk_d61606edd2dc40a7889feeb831395588",
+			"modified": 1657228467847,
+			"created": 1656781491627,
+			"name": "Users",
 			"description": "",
-			"method": "GET",
+			"environment": {
+				"resource_users": "users",
+				"resource_one": "one",
+				"resource_all": "all",
+				"resource_roles": "roles"
+			},
+			"environmentPropertyOrder": {
+				"&": [
+					"resource_users",
+					"resource_one",
+					"resource_all",
+					"resource_roles"
+				]
+			},
+			"metaSortKey": 100,
+			"_type": "request_group"
+		},
+		{
+			"_id": "req_177b9228ff0c426fbbeb49f08f84beec",
+			"parentId": "fld_fbb541ae56524947853809cc63561add",
+			"modified": 1657234486620,
+			"created": 1656861522838,
+			"url": "{{ _.baseURL }}/{{ _.resource_users }}/01d95cf4-f362-4194-abc1-d0ca921f005a",
+			"name": "delete",
+			"description": "",
+			"method": "DELETE",
 			"body": {},
 			"parameters": [],
 			"headers": [],
@@ -196,9 +141,35 @@
 			"_type": "request"
 		},
 		{
+			"_id": "req_84d2310da29440d1900286207eda960f",
+			"parentId": "fld_fbb541ae56524947853809cc63561add",
+			"modified": 1657234487311,
+			"created": 1656782379549,
+			"url": "{{ _.baseURL }}/{{ _.resource_users }}/{{ _.resource_one }}",
+			"name": "find",
+			"description": "",
+			"method": "GET",
+			"body": {},
+			"parameters": [],
+			"headers": [],
+			"authentication": {
+				"type": "bearer",
+				"token": "{% response 'body', 'req_c5c92c7d7f454799ae353e24f6e2e2e5', 'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'always', 60 %}"
+			},
+			"metaSortKey": 200,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
+		},
+		{
 			"_id": "req_9c0d6c7675554b488aa9403114e4e39e",
 			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1656866664195,
+			"modified": 1657234487956,
 			"created": 1656859814424,
 			"url": "{{ _.baseURL }}/{{ _.resource_users }}/{{ _.resource_all }}",
 			"name": "find all",
@@ -211,7 +182,77 @@
 				"type": "bearer",
 				"token": "{% response 'body', 'req_c5c92c7d7f454799ae353e24f6e2e2e5', 'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'always', 60 %}"
 			},
-			"metaSortKey": 200,
+			"metaSortKey": 300,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
+		},
+		{
+			"_id": "req_a22879bd03f04c84bbb19215a00e2644",
+			"parentId": "fld_fbb541ae56524947853809cc63561add",
+			"modified": 1657234488589,
+			"created": 1656865900481,
+			"url": "{{ _.baseURL }}/{{ _.resource_users }}",
+			"name": "update",
+			"description": "",
+			"method": "PATCH",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"password\": \"123\"\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json",
+					"id": "pair_c603cbbddba54da3a42b57070dce86b5"
+				}
+			],
+			"authentication": {
+				"type": "bearer",
+				"token": "{% response 'body', 'req_c5c92c7d7f454799ae353e24f6e2e2e5', 'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'always', 60 %}"
+			},
+			"metaSortKey": 400,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
+		},
+		{
+			"_id": "req_d6a8cae2462d402bbf37dab836221cde",
+			"parentId": "fld_fbb541ae56524947853809cc63561add",
+			"modified": 1657234488992,
+			"created": 1657228448050,
+			"url": "{{ _.baseURL }}/{{ _.resource_users }}/{{ _.resource_roles }}/219620f5-758a-4da4-9a11-edb757b465d4",
+			"name": "update roles",
+			"description": "",
+			"method": "PATCH",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"roles\": [\n\t\t\"user\"\n\t]\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json",
+					"id": "pair_c603cbbddba54da3a42b57070dce86b5"
+				}
+			],
+			"authentication": {
+				"type": "bearer",
+				"token": "{% response 'body', 'req_c5c92c7d7f454799ae353e24f6e2e2e5', 'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'always', 60 %}"
+			},
+			"metaSortKey": 500,
 			"isPrivate": false,
 			"settingStoreCookies": true,
 			"settingSendCookies": true,

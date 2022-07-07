@@ -2,7 +2,8 @@ import { hash } from 'bcrypt';
 import {
 	CreateUserDTO,
 	DeleteUserDTO,
-	FindUserDTO,
+	UpdateUserRolesDTO,
+	UpdateUserRolesIdDTO,
 } from 'src/modules/users/dtos';
 import { UpdateUserDTO } from 'src/modules/users/dtos';
 import { IUserEntity } from 'src/modules/users/entities';
@@ -28,7 +29,7 @@ class UsersRepository implements IUsersRepository {
 		return;
 	}
 
-	async findById({ id }: FindUserDTO): Promise<IUserEntity> {
+	async findById(id: string): Promise<IUserEntity> {
 		return await this.prisma.users.findUnique({ where: { id } });
 	}
 
@@ -40,8 +41,8 @@ class UsersRepository implements IUsersRepository {
 		return await this.prisma.users.findMany();
 	}
 
-	async update(id: string, data: UpdateUserDTO): Promise<IUserEntity> {
-		const user = await this.findById({ id });
+	async updateUser(id: string, data: UpdateUserDTO): Promise<IUserEntity> {
+		const user = await this.findById(id);
 
 		const dataToUpdate: UpdateUserDTO = {};
 
@@ -78,6 +79,16 @@ class UsersRepository implements IUsersRepository {
 		return await this.prisma.users.update({
 			where: { id },
 			data: { ...dataToUpdate },
+		});
+	}
+
+	async updateUserRoles(
+		{ id }: UpdateUserRolesIdDTO,
+		{ roles }: UpdateUserRolesDTO
+	): Promise<IUserEntity> {
+		return await this.prisma.users.update({
+			where: { id },
+			data: { roles },
 		});
 	}
 }

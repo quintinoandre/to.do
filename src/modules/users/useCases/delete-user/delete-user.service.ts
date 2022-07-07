@@ -14,7 +14,7 @@ class DeleteUserService {
 	) {}
 
 	async execute({ id }: DeleteUserDTO): Promise<void> {
-		const user = await this.usersRepository.findById({ id });
+		const user = await this.usersRepository.findById(id);
 
 		if (!user) {
 			throw new HttpException(

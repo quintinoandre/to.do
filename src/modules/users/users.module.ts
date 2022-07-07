@@ -17,6 +17,10 @@ import {
 	UpdateUserController,
 	UpdateUserService,
 } from './useCases/update-user';
+import {
+	UpdateUserRolesController,
+	UpdateUserRolesService,
+} from './useCases/update-user-roles';
 
 @Module({
 	controllers: [
@@ -25,6 +29,7 @@ import {
 		FindUserController,
 		FindUsersController,
 		UpdateUserController,
+		UpdateUserRolesController,
 	],
 	providers: [
 		PrismaService,
@@ -34,6 +39,7 @@ import {
 		FindUserService,
 		FindUsersService,
 		UpdateUserService,
+		UpdateUserRolesService,
 	],
 	exports: [UsersRepository],
 })

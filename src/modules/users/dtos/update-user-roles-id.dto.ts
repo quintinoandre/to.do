@@ -1,8 +1,8 @@
 import { IsUUID } from 'class-validator';
 
-class FindUserDTO {
+class UpdateUserRolesIdDTO {
 	@IsUUID()
 	id: string;
 }
 
-export { FindUserDTO };
+export { UpdateUserRolesIdDTO };
