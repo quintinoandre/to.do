@@ -14,6 +14,7 @@ class LoginService {
 			sub: user.id,
 			email: user.email,
 			name: user.name,
+			roles: user.roles,
 		};
 
 		return {

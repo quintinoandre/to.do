@@ -1,4 +1,5 @@
-import { CurrentUser } from 'src/modules/auth/decorators';
+import { CurrentUser, Roles } from 'src/modules/auth/decorators';
+import { Role } from 'src/modules/auth/enums';
 
 import { Body, Controller, Patch } from '@nestjs/common';
 
@@ -12,6 +13,7 @@ class UpdateUserController {
 	constructor(private readonly updateUserService: UpdateUserService) {}
 
 	@Patch()
+	@Roles(Role.User)
 	async handle(
 		@CurrentUser() { id }: IUserEntity,
 		@Body() data: UpdateUserDTO

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { UsersRepository } from '../../infra/prisma/repositories';
-import { UserMap } from '../../mappers';
+import { UserAdminMap } from '../../mappers';
 import { IUsersRepository } from '../../repositories';
 
 @Injectable()
@@ -11,10 +11,10 @@ class FindUsersService {
 		private readonly usersRepository: IUsersRepository
 	) {}
 
-	async execute(): Promise<UserMap[]> {
+	async execute(): Promise<UserAdminMap[]> {
 		const users = await this.usersRepository.findAll();
 
-		return users.map((user) => UserMap.toDTO(user));
+		return users.map((user) => UserAdminMap.toDTO(user));
 	}
 }
 

@@ -1,7 +1,7 @@
 import { compare } from 'bcrypt';
 import { Strategy } from 'passport-local';
 import { UsersRepository } from 'src/modules/users/infra/prisma/repositories';
-import { UserMap } from 'src/modules/users/mappers';
+import { UserAdminMap } from 'src/modules/users/mappers';
 import { IUsersRepository } from 'src/modules/users/repositories';
 
 import { Inject, Injectable } from '@nestjs/common';
@@ -21,14 +21,14 @@ class LocalStrategy extends PassportStrategy(Strategy) {
 	async validate(
 		email: string,
 		password: string
-	): Promise<UserMap | UnauthorizedError> {
+	): Promise<UserAdminMap | UnauthorizedError> {
 		const user = await this.usersRepository.findByEmail(email);
 
 		if (user) {
 			const isPasswordValid = await compare(password, user.password);
 
 			if (isPasswordValid) {
-				return UserMap.toDTO(user);
+				return UserAdminMap.toDTO(user);
 			}
 		}
 

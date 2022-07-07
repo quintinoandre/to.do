@@ -1,4 +1,5 @@
-import { CurrentUser } from 'src/modules/auth/decorators';
+import { CurrentUser, Roles } from 'src/modules/auth/decorators';
+import { Role } from 'src/modules/auth/enums';
 
 import { Controller, Get } from '@nestjs/common';
 
@@ -11,6 +12,7 @@ class FindUserController {
 	constructor(private readonly findUserService: FindUserService) {}
 
 	@Get('one')
+	@Roles(Role.User)
 	async handle(@CurrentUser() { id }: IUserEntity): Promise<UserMap> {
 		return await this.findUserService.execute({ id });
 	}
