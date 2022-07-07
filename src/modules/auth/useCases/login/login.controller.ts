@@ -20,10 +20,10 @@ class LoginController {
 	@UseGuards(LocalAuthGuard)
 	@Post('login')
 	@HttpCode(HttpStatus.OK)
-	login(@Request() request: ILoginRequestDTO) {
+	handle(@Request() request: ILoginRequestDTO) {
 		const { user } = request;
 
-		return this.loginService.login(user);
+		return this.loginService.execute(user);
 	}
 }
 

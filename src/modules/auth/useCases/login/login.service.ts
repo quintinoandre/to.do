@@ -1,41 +1,16 @@
-import { compare } from 'bcrypt';
 import { IUserEntity } from 'src/modules/users/entities';
-import { UsersRepository } from 'src/modules/users/infra/prisma/repositories';
-import { UserMap } from 'src/modules/users/mappers';
-import { IUsersRepository } from 'src/modules/users/repositories';
 
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
-import { IUserJWTPayloadDTO, IUserTokenDTO } from '../../dtos';
-import { UnauthorizedError } from '../../errors';
+import { IUserTokenPayloadDTO, IUserTokenDTO } from '../../dtos';
 
 @Injectable()
 class LoginService {
-	constructor(
-		@Inject(UsersRepository)
-		private readonly usersRepository: IUsersRepository,
-		private readonly jwtService: JwtService
-	) {}
+	constructor(private readonly jwtService: JwtService) {}
 
-	async validateUser(email: string, password: string): Promise<UserMap> {
-		const user = await this.usersRepository.findByEmail(email);
-
-		if (user) {
-			const isPasswordValid = await compare(password, user.password);
-
-			if (isPasswordValid) {
-				return UserMap.toDTO(user);
-			}
-		}
-
-		throw new UnauthorizedError(
-			'Email address or password provided is incorrect'
-		);
-	}
-
-	login(user: IUserEntity): IUserTokenDTO {
-		const payload: IUserJWTPayloadDTO = {
+	execute(user: IUserEntity): IUserTokenDTO {
+		const payload: IUserTokenPayloadDTO = {
 			sub: user.id,
 			email: user.email,
 			name: user.name,

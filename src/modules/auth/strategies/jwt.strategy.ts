@@ -3,14 +3,14 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 
-import { IUserFromJWTDTO, IUserJWTPayloadDTO } from '../dtos';
+import { IUserFromTokenDTO, IUserTokenPayloadDTO } from '../dtos';
 
 const {
 	env: { JWT_SECRET: secretOrKey },
 } = process;
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+class JwtStrategy extends PassportStrategy(Strategy) {
 	constructor() {
 		super({
 			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -19,7 +19,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 		});
 	}
 
-	async validate(payload: IUserJWTPayloadDTO): Promise<IUserFromJWTDTO> {
+	async validate(payload: IUserTokenPayloadDTO): Promise<IUserFromTokenDTO> {
 		return { id: payload.sub, email: payload.email, name: payload.name };
 	}
 }
+
+export { JwtStrategy };

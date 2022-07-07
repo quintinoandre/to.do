@@ -1,5 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 
 import { UsersModule } from '../users';
 import { LoginValidationMiddleware } from './middlewares';
@@ -13,6 +14,7 @@ const {
 @Module({
 	imports: [
 		UsersModule,
+		PassportModule,
 		JwtModule.register({ secret, signOptions: { expiresIn } }),
 	],
 	controllers: [LoginController],

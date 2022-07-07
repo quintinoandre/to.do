@@ -1,4 +1,4 @@
-interface IUserJWTPayloadDTO {
+interface IUserTokenPayloadDTO {
 	sub: string;
 	email: string;
 	name: string;
@@ -6,4 +6,4 @@ interface IUserJWTPayloadDTO {
 	exp?: number;
 }
 
-export { IUserJWTPayloadDTO };
+export { IUserTokenPayloadDTO };
