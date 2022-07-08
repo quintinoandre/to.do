@@ -1,13 +1,13 @@
 {
 	"_type": "export",
 	"__export_format": 4,
-	"__export_date": "2022-07-07T22:55:48.765Z",
+	"__export_date": "2022-07-08T00:57:05.486Z",
 	"__export_source": "insomnia.desktop.app:v2022.4.2",
 	"resources": [
 		{
 			"_id": "req_c5c92c7d7f454799ae353e24f6e2e2e5",
 			"parentId": "fld_b1f22a7637264b259ebabd30383dc33e",
-			"modified": 1657234485262,
+			"modified": 1657241786473,
 			"created": 1656839945494,
 			"url": "{{ _.baseURL }}/login",
 			"name": "Login",
@@ -61,7 +61,7 @@
 		{
 			"_id": "req_86502a4be08746a0b9b9daaf8fdb8a71",
 			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1657234485834,
+			"modified": 1657241790143,
 			"created": 1656777939166,
 			"url": "{{ _.baseURL }}/{{ _.resource_users }}",
 			"name": "create",
@@ -117,9 +117,9 @@
 		{
 			"_id": "req_177b9228ff0c426fbbeb49f08f84beec",
 			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1657234486620,
+			"modified": 1657234859031,
 			"created": 1656861522838,
-			"url": "{{ _.baseURL }}/{{ _.resource_users }}/01d95cf4-f362-4194-abc1-d0ca921f005a",
+			"url": "{{ _.baseURL }}/{{ _.resource_users }}/78e2f180-5a62-4570-b89f-39b983612536",
 			"name": "delete",
 			"description": "",
 			"method": "DELETE",
@@ -143,7 +143,7 @@
 		{
 			"_id": "req_84d2310da29440d1900286207eda960f",
 			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1657234487311,
+			"modified": 1657240523210,
 			"created": 1656782379549,
 			"url": "{{ _.baseURL }}/{{ _.resource_users }}/{{ _.resource_one }}",
 			"name": "find",
@@ -169,7 +169,7 @@
 		{
 			"_id": "req_9c0d6c7675554b488aa9403114e4e39e",
 			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1657234487956,
+			"modified": 1657241794065,
 			"created": 1656859814424,
 			"url": "{{ _.baseURL }}/{{ _.resource_users }}/{{ _.resource_all }}",
 			"name": "find all",
@@ -195,7 +195,7 @@
 		{
 			"_id": "req_a22879bd03f04c84bbb19215a00e2644",
 			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1657234488589,
+			"modified": 1657234878790,
 			"created": 1656865900481,
 			"url": "{{ _.baseURL }}/{{ _.resource_users }}",
 			"name": "update",
@@ -230,7 +230,7 @@
 		{
 			"_id": "req_d6a8cae2462d402bbf37dab836221cde",
 			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1657234488992,
+			"modified": 1657241800114,
 			"created": 1657228448050,
 			"url": "{{ _.baseURL }}/{{ _.resource_users }}/{{ _.resource_roles }}/219620f5-758a-4da4-9a11-edb757b465d4",
 			"name": "update roles",
@@ -261,6 +261,54 @@
 			"settingRebuildPath": true,
 			"settingFollowRedirects": "global",
 			"_type": "request"
+		},
+		{
+			"_id": "req_311415d6c6fe4c768cde5ac4676a7e17",
+			"parentId": "fld_35fa168e075245b3b916b4a40e15c895",
+			"modified": 1657241809734,
+			"created": 1657240253686,
+			"url": "{{ _.baseURL }}/{{ _.resource_todos }}",
+			"name": "create",
+			"description": "",
+			"method": "POST",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"title\": \"teste5\",\n\t\"deadline\": \"2021-07-09T00:00:00.000Z\"\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json",
+					"id": "pair_8db86c953f3842caa123cd4701c514b6"
+				}
+			],
+			"authentication": {
+				"type": "bearer",
+				"token": "{% response 'body', 'req_c5c92c7d7f454799ae353e24f6e2e2e5', 'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'always', 60 %}",
+				"disabled": false
+			},
+			"metaSortKey": 0,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
+		},
+		{
+			"_id": "fld_35fa168e075245b3b916b4a40e15c895",
+			"parentId": "wrk_d61606edd2dc40a7889feeb831395588",
+			"modified": 1657240319881,
+			"created": 1657240253676,
+			"name": "Todos",
+			"description": "",
+			"environment": { "resource_todos": "todos" },
+			"environmentPropertyOrder": { "&": ["resource_todos"] },
+			"metaSortKey": 150,
+			"_type": "request_group"
 		},
 		{
 			"_id": "env_c8ca17a6f186cc884ad990946e330d1e57b16b03",

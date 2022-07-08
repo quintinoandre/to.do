@@ -6,10 +6,11 @@ import { AppService } from './app.service';
 import { AuthModule } from './modules/auth';
 import { JwtAuthGuard } from './modules/auth/guards';
 import { RolesGuard } from './modules/auth/guards/roles.guard';
+import { TodosModule } from './modules/todos';
 import { UsersModule } from './modules/users';
 
 @Module({
-	imports: [UsersModule, AuthModule],
+	imports: [UsersModule, AuthModule, TodosModule],
 	controllers: [AppController],
 	providers: [
 		AppService,
