@@ -15,6 +15,14 @@ class TodosRepository implements ITodosRepository {
 	async create(id: string, data: CreateTodoDTO): Promise<ITodoEntity> {
 		return await this.prisma.todos.create({ data: { ...data, userId: id } });
 	}
+
+	async findAll(userId: string): Promise<ITodoEntity[]> {
+		return await this.prisma.$queryRaw`
+		SELECT * FROM todos
+    WHERE "userId" = ${userId}
+		ORDER BY deadline ASC, title ASC
+		`;
+	}
 }
 
 export { TodosRepository };

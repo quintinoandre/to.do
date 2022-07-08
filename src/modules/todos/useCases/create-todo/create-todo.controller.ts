@@ -8,7 +8,7 @@ import { ITodoEntity } from '../../entities';
 import { CreateTodoService } from './create-todo.service';
 
 @Controller('todos')
-export class CreateTodoController {
+class CreateTodoController {
 	constructor(private readonly createTodoService: CreateTodoService) {}
 
 	@Post()
@@ -20,3 +20,5 @@ export class CreateTodoController {
 		return await this.createTodoService.execute(id, data);
 	}
 }
+
+export { CreateTodoController };

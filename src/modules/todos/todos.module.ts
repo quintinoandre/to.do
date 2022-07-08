@@ -7,9 +7,15 @@ import {
 	CreateTodoController,
 	CreateTodoService,
 } from './useCases/create-todo';
+import { FindTodosController, FindTodosService } from './useCases/find-todos';
 
 @Module({
-	controllers: [CreateTodoController],
-	providers: [PrismaService, TodosRepository, CreateTodoService],
+	controllers: [CreateTodoController, FindTodosController],
+	providers: [
+		PrismaService,
+		TodosRepository,
+		CreateTodoService,
+		FindTodosService,
+	],
 })
 export class TodosModule {}
