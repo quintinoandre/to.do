@@ -1,4 +1,4 @@
-import { CreateTodoDTO } from 'src/modules/todos/dtos';
+import { CreateTodoDTO, UpdateTodoDTO } from 'src/modules/todos/dtos';
 import { ITodoEntity } from 'src/modules/todos/entities';
 import { ITodosRepository } from 'src/modules/todos/repositories';
 import { PrismaService } from 'src/shared/infra/prisma';
@@ -41,6 +41,48 @@ class TodosRepository implements ITodosRepository {
 		await this.prisma.todos.delete({ where: { id } });
 
 		return;
+	}
+
+	async update(
+		userId: string,
+		id: string,
+		data: UpdateTodoDTO
+	): Promise<ITodoEntity> {
+		const todo = await this.findById(userId, id);
+
+		const dataToUpdate: UpdateTodoDTO = {};
+
+		if (
+			data.title &&
+			data.title !== null &&
+			data.title !== undefined &&
+			data.title !== todo.title
+		) {
+			dataToUpdate.title = data.title;
+		}
+
+		if (
+			data.deadline &&
+			data.deadline !== null &&
+			data.deadline !== undefined &&
+			new Date(data.deadline) !== todo.deadline
+		) {
+			dataToUpdate.deadline = new Date(data.deadline);
+		}
+
+		if (
+			data.done &&
+			data.done !== null &&
+			data.done !== undefined &&
+			data.done !== todo.done
+		) {
+			dataToUpdate.done = data.done;
+		}
+
+		return await this.prisma.todos.update({
+			where: { id },
+			data: { ...dataToUpdate },
+		});
 	}
 }
 

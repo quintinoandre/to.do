@@ -17,6 +17,10 @@ import {
 	FindTodosByTitleController,
 	FindTodosByTitleService,
 } from './useCases/find-todos-by-title';
+import {
+	UpdateTodoController,
+	UpdateTodoService,
+} from './useCases/update-todo';
 
 @Module({
 	controllers: [
@@ -25,6 +29,7 @@ import {
 		FindTodoController,
 		FindTodosController,
 		DeleteTodoController,
+		UpdateTodoController,
 	],
 	providers: [
 		PrismaService,
@@ -34,6 +39,7 @@ import {
 		FindTodoService,
 		FindTodosService,
 		DeleteTodoService,
+		UpdateTodoService,
 	],
 })
 export class TodosModule {}

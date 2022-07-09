@@ -1,4 +1,4 @@
-import { CreateTodoDTO } from '../dtos';
+import { CreateTodoDTO, UpdateTodoDTO } from '../dtos';
 import { ITodoEntity } from '../entities';
 
 interface ITodosRepository {
@@ -7,6 +7,7 @@ interface ITodosRepository {
 	findAll(userId: string): Promise<ITodoEntity[]>;
 	findByTitle(userId: string, title: string): Promise<ITodoEntity[]>;
 	delete(id: string): Promise<void>;
+	update(userId: string, id: string, data: UpdateTodoDTO): Promise<ITodoEntity>;
 }
 
 export { ITodosRepository };

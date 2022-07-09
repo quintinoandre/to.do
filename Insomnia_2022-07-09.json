@@ -1,13 +1,13 @@
 {
 	"_type": "export",
 	"__export_format": 4,
-	"__export_date": "2022-07-09T10:48:23.664Z",
+	"__export_date": "2022-07-09T11:17:59.475Z",
 	"__export_source": "insomnia.desktop.app:v2022.4.2",
 	"resources": [
 		{
 			"_id": "req_c5c92c7d7f454799ae353e24f6e2e2e5",
 			"parentId": "fld_b1f22a7637264b259ebabd30383dc33e",
-			"modified": 1657363696441,
+			"modified": 1657365458403,
 			"created": 1656839945494,
 			"url": "{{ _.baseURL }}/login",
 			"name": "Login",
@@ -39,7 +39,7 @@
 		{
 			"_id": "fld_b1f22a7637264b259ebabd30383dc33e",
 			"parentId": "wrk_d61606edd2dc40a7889feeb831395588",
-			"modified": 1657363696436,
+			"modified": 1657365458395,
 			"created": 1656839933322,
 			"name": "Auth",
 			"description": "",
@@ -61,7 +61,7 @@
 		{
 			"_id": "req_311415d6c6fe4c768cde5ac4676a7e17",
 			"parentId": "fld_35fa168e075245b3b916b4a40e15c895",
-			"modified": 1657363696442,
+			"modified": 1657365458403,
 			"created": 1657240253686,
 			"url": "{{ _.baseURL }}/{{ _.resource_todos }}",
 			"name": "create",
@@ -97,7 +97,7 @@
 		{
 			"_id": "fld_35fa168e075245b3b916b4a40e15c895",
 			"parentId": "wrk_d61606edd2dc40a7889feeb831395588",
-			"modified": 1657363696436,
+			"modified": 1657365458395,
 			"created": 1657240253676,
 			"name": "Todos",
 			"description": "",
@@ -114,7 +114,7 @@
 		{
 			"_id": "req_b235c2d9c561424d85c4901859fc635c",
 			"parentId": "fld_35fa168e075245b3b916b4a40e15c895",
-			"modified": 1657363696442,
+			"modified": 1657365458403,
 			"created": 1657363042126,
 			"url": "{{ _.baseURL }}/{{ _.resource_todos }}/8c01db45-3114-41fc-8759-b3d4e270b689",
 			"name": "delete",
@@ -140,7 +140,7 @@
 		{
 			"_id": "req_2d019606ff7d4c1e9976798771455286",
 			"parentId": "fld_35fa168e075245b3b916b4a40e15c895",
-			"modified": 1657363696442,
+			"modified": 1657365458403,
 			"created": 1657355773908,
 			"url": "{{ _.baseURL }}/{{ _.resource_todos }}/8e2106dd-35bc-4b8f-ac63-183e73dda61b",
 			"name": "find todo",
@@ -166,7 +166,7 @@
 		{
 			"_id": "req_f1ca6a92b4144cbeae41b54c5371babd",
 			"parentId": "fld_35fa168e075245b3b916b4a40e15c895",
-			"modified": 1657363696442,
+			"modified": 1657365458403,
 			"created": 1657358545466,
 			"url": "{{ _.baseURL }}/{{ _.resource_todos }}/{{ _.resource_bytitle }}",
 			"name": "find todo by title",
@@ -199,7 +199,7 @@
 		{
 			"_id": "req_6f6e2f5fdd8b48f88e0e608cf4ddf6df",
 			"parentId": "fld_35fa168e075245b3b916b4a40e15c895",
-			"modified": 1657363696442,
+			"modified": 1657365458403,
 			"created": 1657321013789,
 			"url": "{{ _.baseURL }}/{{ _.resource_todos }}",
 			"name": "find todos",
@@ -223,9 +223,44 @@
 			"_type": "request"
 		},
 		{
+			"_id": "req_4a07e9818deb45afb57591a3cc8cf58c",
+			"parentId": "fld_35fa168e075245b3b916b4a40e15c895",
+			"modified": 1657365458403,
+			"created": 1657365190887,
+			"url": "{{ _.baseURL }}/{{ _.resource_todos }}/8e2106dd-35bc-4b8f-ac63-183e73dda61b",
+			"name": "update",
+			"description": "",
+			"method": "PATCH",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n\t\"deadline\": \"2021-07-10T00:00:00.000Z\"\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json",
+					"id": "pair_c603cbbddba54da3a42b57070dce86b5"
+				}
+			],
+			"authentication": {
+				"type": "bearer",
+				"token": "{% response 'body', 'req_c5c92c7d7f454799ae353e24f6e2e2e5', 'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'always', 60 %}"
+			},
+			"metaSortKey": 500,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global",
+			"_type": "request"
+		},
+		{
 			"_id": "req_86502a4be08746a0b9b9daaf8fdb8a71",
 			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1657363696443,
+			"modified": 1657365458403,
 			"created": 1656777939166,
 			"url": "{{ _.baseURL }}/{{ _.resource_users }}",
 			"name": "create",
@@ -257,7 +292,7 @@
 		{
 			"_id": "fld_fbb541ae56524947853809cc63561add",
 			"parentId": "wrk_d61606edd2dc40a7889feeb831395588",
-			"modified": 1657363696436,
+			"modified": 1657365458395,
 			"created": 1656781491627,
 			"name": "Users",
 			"description": "",
@@ -275,7 +310,7 @@
 		{
 			"_id": "req_177b9228ff0c426fbbeb49f08f84beec",
 			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1657363696443,
+			"modified": 1657365458403,
 			"created": 1656861522838,
 			"url": "{{ _.baseURL }}/{{ _.resource_users }}/6e68c287-355c-4d23-81dd-47ed63b25556",
 			"name": "delete",
@@ -301,7 +336,7 @@
 		{
 			"_id": "req_84d2310da29440d1900286207eda960f",
 			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1657363696443,
+			"modified": 1657365458403,
 			"created": 1656782379549,
 			"url": "{{ _.baseURL }}/{{ _.resource_users }}",
 			"name": "find",
@@ -327,7 +362,7 @@
 		{
 			"_id": "req_9c0d6c7675554b488aa9403114e4e39e",
 			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1657363696443,
+			"modified": 1657365458403,
 			"created": 1656859814424,
 			"url": "{{ _.baseURL }}/{{ _.resource_users }}/{{ _.resource_all }}",
 			"name": "find all",
@@ -353,7 +388,7 @@
 		{
 			"_id": "req_a22879bd03f04c84bbb19215a00e2644",
 			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1657363696443,
+			"modified": 1657365458403,
 			"created": 1656865900481,
 			"url": "{{ _.baseURL }}/{{ _.resource_users }}",
 			"name": "update",
@@ -388,7 +423,7 @@
 		{
 			"_id": "req_d6a8cae2462d402bbf37dab836221cde",
 			"parentId": "fld_fbb541ae56524947853809cc63561add",
-			"modified": 1657363696443,
+			"modified": 1657365458403,
 			"created": 1657228448050,
 			"url": "{{ _.baseURL }}/{{ _.resource_users }}/{{ _.resource_roles }}/219620f5-758a-4da4-9a11-edb757b465d4",
 			"name": "update roles",
