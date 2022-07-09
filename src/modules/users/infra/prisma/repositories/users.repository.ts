@@ -37,7 +37,10 @@ class UsersRepository implements IUsersRepository {
 	}
 
 	async findAll(): Promise<IUserEntity[]> {
-		return await this.prisma.users.findMany({ include: { todos: true } });
+		return await this.prisma.users.findMany({
+			include: { todos: true },
+			orderBy: { name: 'asc' },
+		});
 	}
 
 	async updateUser(id: string, data: UpdateUserDTO): Promise<IUserEntity> {

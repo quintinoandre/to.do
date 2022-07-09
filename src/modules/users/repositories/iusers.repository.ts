@@ -3,7 +3,6 @@ import {
 	DeleteUserDTO,
 	UpdateUserDTO,
 	UpdateUserRolesDTO,
-	UpdateUserRolesIdDTO,
 } from '../dtos';
 import { IUserEntity } from '../entities';
 
@@ -14,10 +13,7 @@ interface IUsersRepository {
 	findById(id: string): Promise<IUserEntity>;
 	findAll(): Promise<IUserEntity[]>;
 	updateUser(id: string, data: UpdateUserDTO): Promise<IUserEntity>;
-	updateUserRoles(
-		id: UpdateUserRolesIdDTO,
-		roles: UpdateUserRolesDTO
-	): Promise<IUserEntity>;
+	updateUserRoles(id: string, roles: UpdateUserRolesDTO): Promise<IUserEntity>;
 }
 
 export { IUsersRepository };
