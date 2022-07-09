@@ -1,6 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { STATUS_CODES } from 'http';
 
-import { UpdateUserRolesDTO, UpdateUserRolesIdDTO } from '../../dtos';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+
+import { UpdateUserRolesDTO } from '../../dtos';
 import { UsersRepository } from '../../infra/prisma/repositories';
 import { UserAdminMap } from '../../mappers';
 import { IUsersRepository } from '../../repositories';
@@ -12,10 +14,20 @@ class UpdateUserRolesService {
 		private readonly usersRepository: IUsersRepository
 	) {}
 
-	async execute(
-		id: UpdateUserRolesIdDTO,
-		roles: UpdateUserRolesDTO
-	): Promise<UserAdminMap> {
+	async execute(id: string, roles: UpdateUserRolesDTO): Promise<UserAdminMap> {
+		const userExists = await this.usersRepository.findById(id);
+
+		if (!userExists) {
+			throw new HttpException(
+				{
+					statusCode: HttpStatus.NOT_FOUND,
+					message: `User doesn't exist`,
+					error: STATUS_CODES[HttpStatus.NOT_FOUND],
+				},
+				HttpStatus.NOT_FOUND
+			);
+		}
+
 		const user = await this.usersRepository.updateUserRoles(id, roles);
 
 		return UserAdminMap.toDTO(user);

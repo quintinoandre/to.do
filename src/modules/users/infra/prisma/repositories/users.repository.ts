@@ -3,7 +3,6 @@ import {
 	CreateUserDTO,
 	DeleteUserDTO,
 	UpdateUserRolesDTO,
-	UpdateUserRolesIdDTO,
 } from 'src/modules/users/dtos';
 import { UpdateUserDTO } from 'src/modules/users/dtos';
 import { IUserEntity } from 'src/modules/users/entities';
@@ -83,7 +82,7 @@ class UsersRepository implements IUsersRepository {
 	}
 
 	async updateUserRoles(
-		{ id }: UpdateUserRolesIdDTO,
+		id: string,
 		{ roles }: UpdateUserRolesDTO
 	): Promise<IUserEntity> {
 		return await this.prisma.users.update({

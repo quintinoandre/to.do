@@ -16,7 +16,7 @@ class UpdateUserRolesController {
 	@Patch('roles/:id')
 	@Roles(Role.Admin)
 	async handle(
-		@Param() id: UpdateUserRolesIdDTO,
+		@Param() { id }: UpdateUserRolesIdDTO,
 		@Body() roles: UpdateUserRolesDTO
 	): Promise<UserAdminMap> {
 		return await this.updateUserRolesService.execute(id, roles);
