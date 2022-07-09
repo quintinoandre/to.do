@@ -33,7 +33,14 @@ class TodosRepository implements ITodosRepository {
 		SELECT * FROM todos
 		WHERE "userId" = ${userId}
 		AND title LIKE ${`%${title}%`}
+		ORDER BY deadline ASC, title ASC
 		`;
+	}
+
+	async delete(id: string): Promise<void> {
+		await this.prisma.todos.delete({ where: { id } });
+
+		return;
 	}
 }
 

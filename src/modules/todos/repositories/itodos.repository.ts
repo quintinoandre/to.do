@@ -6,6 +6,7 @@ interface ITodosRepository {
 	findById(userId: string, id: string): Promise<ITodoEntity>;
 	findAll(userId: string): Promise<ITodoEntity[]>;
 	findByTitle(userId: string, title: string): Promise<ITodoEntity[]>;
+	delete(id: string): Promise<void>;
 }
 
 export { ITodosRepository };
