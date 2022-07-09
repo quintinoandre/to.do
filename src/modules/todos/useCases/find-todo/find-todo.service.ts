@@ -13,8 +13,8 @@ class FindTodoService {
 		private readonly todosRepository: ITodosRepository
 	) {}
 
-	async execute(id: string): Promise<ITodoEntity> {
-		const todo = await this.todosRepository.findById(id);
+	async execute(userId: string, id: string): Promise<ITodoEntity> {
+		const todo = await this.todosRepository.findById(userId, id);
 
 		if (!todo) {
 			throw new HttpException(

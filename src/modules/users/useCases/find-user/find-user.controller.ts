@@ -11,7 +11,7 @@ import { FindUserService } from './find-user.service';
 class FindUserController {
 	constructor(private readonly findUserService: FindUserService) {}
 
-	@Get('one')
+	@Get()
 	@Roles(Role.User)
 	async handle(@CurrentUser() { id }: IUserEntity): Promise<UserMap> {
 		return await this.findUserService.execute(id);

@@ -1,5 +1,6 @@
 import { CurrentUser, Roles } from 'src/modules/auth/decorators';
 import { Role } from 'src/modules/auth/enums';
+import { IUserEntity } from 'src/modules/users/entities';
 
 import { Controller, Get } from '@nestjs/common';
 
@@ -13,7 +14,7 @@ class FindTodosController {
 	@Get()
 	@Roles(Role.User)
 	async handle(
-		@CurrentUser() { id: userId }: ITodoEntity
+		@CurrentUser() { id: userId }: IUserEntity
 	): Promise<ITodoEntity[]> {
 		return await this.findTodosService.execute(userId);
 	}

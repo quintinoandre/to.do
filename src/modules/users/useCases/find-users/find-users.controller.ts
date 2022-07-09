@@ -10,7 +10,7 @@ import { FindUsersService } from './find-users.service';
 class FindUsersController {
 	constructor(private readonly findUsersService: FindUsersService) {}
 
-	@Get()
+	@Get('all')
 	@Roles(Role.Admin)
 	async handle(): Promise<UserAdminMap> {
 		return await this.findUsersService.execute();

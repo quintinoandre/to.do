@@ -12,8 +12,12 @@ class TodosRepository implements ITodosRepository {
 		private readonly prisma: PrismaService
 	) {}
 
-	async create(id: string, data: CreateTodoDTO): Promise<ITodoEntity> {
-		return await this.prisma.todos.create({ data: { ...data, userId: id } });
+	async create(userId: string, data: CreateTodoDTO): Promise<ITodoEntity> {
+		return await this.prisma.todos.create({ data: { ...data, userId } });
+	}
+
+	async findById(userId: string, id: string): Promise<ITodoEntity> {
+		return await this.prisma.todos.findFirst({ where: { id, userId } });
 	}
 
 	async findAll(userId: string): Promise<ITodoEntity[]> {
@@ -24,8 +28,12 @@ class TodosRepository implements ITodosRepository {
 		`;
 	}
 
-	async findById(id: string): Promise<ITodoEntity> {
-		return await this.prisma.todos.findUnique({ where: { id } });
+	async findByTitle(userId: string, title: string): Promise<ITodoEntity[]> {
+		return await this.prisma.$queryRaw`
+		SELECT * FROM todos
+		WHERE "userId" = ${userId}
+		AND title LIKE ${`%${title}%`}
+		`;
 	}
 }
 
