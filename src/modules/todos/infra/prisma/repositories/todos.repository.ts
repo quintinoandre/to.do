@@ -23,6 +23,10 @@ class TodosRepository implements ITodosRepository {
 		ORDER BY deadline ASC, title ASC
 		`;
 	}
+
+	async findById(id: string): Promise<ITodoEntity> {
+		return await this.prisma.todos.findUnique({ where: { id } });
+	}
 }
 
 export { TodosRepository };

@@ -4,6 +4,7 @@ import { ITodoEntity } from '../entities';
 interface ITodosRepository {
 	create(id: string, data: CreateTodoDTO): Promise<ITodoEntity>;
 	findAll(userId: string): Promise<ITodoEntity[]>;
+	findById(id: string): Promise<ITodoEntity>;
 }
 
 export { ITodosRepository };
