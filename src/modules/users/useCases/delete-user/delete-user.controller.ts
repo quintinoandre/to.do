@@ -8,10 +8,23 @@ import {
 	HttpStatus,
 	Param,
 } from '@nestjs/common';
+import {
+	ApiBearerAuth,
+	ApiNotFoundResponse,
+	ApiOperation,
+	ApiTags,
+	ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
-import { DeleteUserDTO } from '../../dtos';
+import {
+	DeleteUserDTO,
+	UserNotFoundResponse,
+	UserUnauthorizedResponse,
+} from '../../dtos';
 import { DeleteUserService } from './delete-user.service';
 
+@ApiTags('users')
+@ApiBearerAuth()
 @Controller('users')
 class DeleteUserController {
 	constructor(private readonly deleteUserService: DeleteUserService) {}
@@ -19,6 +32,14 @@ class DeleteUserController {
 	@Delete(':id')
 	@Roles(Role.Admin)
 	@HttpCode(HttpStatus.NO_CONTENT)
+	@ApiOperation({
+		summary: 'Route to delete a user',
+		description: `
+	👉 Only admin users can delete users
+	`,
+	})
+	@ApiUnauthorizedResponse({ type: UserUnauthorizedResponse })
+	@ApiNotFoundResponse({ type: UserNotFoundResponse })
 	async handle(@Param() id: DeleteUserDTO): Promise<void> {
 		return await this.deleteUserService.execute(id);
 	}

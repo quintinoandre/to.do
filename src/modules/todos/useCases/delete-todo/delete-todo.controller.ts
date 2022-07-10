@@ -9,10 +9,23 @@ import {
 	HttpStatus,
 	Param,
 } from '@nestjs/common';
+import {
+	ApiBearerAuth,
+	ApiNotFoundResponse,
+	ApiOperation,
+	ApiTags,
+	ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
-import { DeleteTodoDTO } from '../../dtos';
+import {
+	DeleteTodoDTO,
+	TodoNotFoundResponse,
+	TodoUnauthorizedResponse,
+} from '../../dtos';
 import { DeleteTodoService } from './delete-todo.service';
 
+@ApiTags('todos')
+@ApiBearerAuth()
 @Controller('todos')
 class DeleteTodoController {
 	constructor(private readonly deleteTodoService: DeleteTodoService) {}
@@ -20,6 +33,9 @@ class DeleteTodoController {
 	@Delete(':id')
 	@Roles(Role.User)
 	@HttpCode(HttpStatus.NO_CONTENT)
+	@ApiOperation({ summary: 'Route to delete a todo' })
+	@ApiUnauthorizedResponse({ type: TodoUnauthorizedResponse })
+	@ApiNotFoundResponse({ type: TodoNotFoundResponse })
 	async handle(
 		@CurrentUser() { id: userId }: IUserEntity,
 		@Param() { id }: DeleteTodoDTO

@@ -7,7 +7,7 @@ import {
 	NestMiddleware,
 } from '@nestjs/common';
 
-import { LoginRequestBody } from '../dtos';
+import { LoginDTO } from '../dtos';
 
 @Injectable()
 class LoginValidationMiddleware implements NestMiddleware {
@@ -16,13 +16,13 @@ class LoginValidationMiddleware implements NestMiddleware {
 			body: { email, password },
 		} = request;
 
-		const loginRequestBody = new LoginRequestBody();
+		const loginBody = new LoginDTO();
 
-		loginRequestBody.email = email;
+		loginBody.email = email;
 
-		loginRequestBody.password = password;
+		loginBody.password = password;
 
-		const validations = await validate(loginRequestBody);
+		const validations = await validate(loginBody);
 
 		if (validations.length) {
 			throw new BadRequestException(

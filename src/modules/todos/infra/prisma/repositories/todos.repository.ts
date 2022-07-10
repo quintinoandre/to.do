@@ -71,7 +71,6 @@ class TodosRepository implements ITodosRepository {
 		}
 
 		if (
-			data.done &&
 			data.done !== null &&
 			data.done !== undefined &&
 			data.done !== todo.done

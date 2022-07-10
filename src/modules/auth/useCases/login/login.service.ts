@@ -3,13 +3,13 @@ import { IUserEntity } from 'src/modules/users/entities';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
-import { IUserTokenPayloadDTO, IUserTokenDTO } from '../../dtos';
+import { IUserTokenPayloadDTO, UserTokenDTO } from '../../dtos';
 
 @Injectable()
 class LoginService {
 	constructor(private readonly jwtService: JwtService) {}
 
-	execute(user: IUserEntity): IUserTokenDTO {
+	execute(user: IUserEntity): UserTokenDTO {
 		const payload: IUserTokenPayloadDTO = {
 			sub: user.id,
 			email: user.email,

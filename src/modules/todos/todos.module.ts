@@ -25,20 +25,20 @@ import {
 @Module({
 	controllers: [
 		CreateTodoController,
+		DeleteTodoController,
 		FindTodosByTitleController,
 		FindTodoController,
 		FindTodosController,
-		DeleteTodoController,
 		UpdateTodoController,
 	],
 	providers: [
 		PrismaService,
 		TodosRepository,
 		CreateTodoService,
+		DeleteTodoService,
 		FindTodosByTitleService,
 		FindTodoService,
 		FindTodosService,
-		DeleteTodoService,
 		UpdateTodoService,
 	],
 })
