@@ -1,46 +1,42 @@
-import { HttpException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { CreateUserDTO, UserMapDTO } from '../../dtos';
 import { UsersRepository } from '../../infra/prisma/repositories';
 import { UsersInMemoryRepository } from '../../repositories/in-memory';
-import { CreateUserService } from './create-user.service';
+import { CreateUserService } from '../create-user';
+import { FindUserService } from './find-user.service';
 
-describe('Create User', () => {
+describe('Find User', () => {
 	let createUserService: CreateUserService;
+	let findUserService: FindUserService;
 	let user: CreateUserDTO;
 	let createdUser: UserMapDTO;
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
-			providers: [UsersRepository, CreateUserService],
+			providers: [UsersRepository, CreateUserService, FindUserService],
 		})
 			.overrideProvider(UsersRepository)
 			.useClass(UsersInMemoryRepository)
 			.compile();
 
 		createUserService = module.get<CreateUserService>(CreateUserService);
+		findUserService = module.get<FindUserService>(FindUserService);
 
 		user = {
 			name: 'Lester Leonard',
-			email: `fol${Math.random().toFixed(2)}@kehjulsec.ag`,
+			email: 'fol@kehjulsec.ag',
 			password: 'MMv7Sy70JusXvYRX',
 		};
 
 		createdUser = await createUserService.execute(user);
 	});
 
-	it('should be able to create a new user', () => {
-		expect(createdUser).toMatchObject({
+	it('should be able to find a user', async () => {
+		expect(await findUserService.execute(createdUser.id)).toMatchObject({
 			id: expect.any(String),
 			name: user.name,
 			email: user.email,
 		});
-	});
-
-	it('should not be able to create a new user with an existent email', () => {
-		expect(async () => {
-			await createUserService.execute(user);
-		}).rejects.toBeInstanceOf(HttpException);
 	});
 });
