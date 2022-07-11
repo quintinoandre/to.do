@@ -1,12 +1,12 @@
 import { compare } from 'bcrypt';
 import { Strategy } from 'passport-local';
-import { UsersRepository } from 'src/modules/users/infra/prisma/repositories';
-import { UserAdminMap } from 'src/modules/users/mappers';
-import { IUsersRepository } from 'src/modules/users/repositories';
 
 import { Inject, Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 
+import { UsersRepository } from '../../users/infra/prisma/repositories';
+import { UserAdminMap } from '../../users/mappers';
+import { IUsersRepository } from '../../users/repositories';
 import { UnauthorizedError } from '../errors';
 
 @Injectable()

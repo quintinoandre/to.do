@@ -1,10 +1,10 @@
 import { instanceToInstance } from 'class-transformer';
 
 import { UserMapDTO } from '../dtos';
-import { IUserEntity } from '../entities';
+import { UserEntity } from '../entities';
 
 class UserAdminMap {
-	static toDTO({ id, name, email, roles, todos }: IUserEntity): UserMapDTO {
+	static toDTO({ id, name, email, roles, todos }: UserEntity): UserMapDTO {
 		return instanceToInstance({ id, name, email, roles, todos });
 	}
 }

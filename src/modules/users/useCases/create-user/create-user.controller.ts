@@ -1,5 +1,3 @@
-import { IsPublic } from 'src/modules/auth/decorators';
-
 import { Controller, Post, Body } from '@nestjs/common';
 import {
 	ApiBadRequestResponse,
@@ -8,12 +6,13 @@ import {
 	ApiTags,
 } from '@nestjs/swagger';
 
+import { IsPublic } from '../../../auth/decorators';
 import {
 	CreateUserDTO,
 	CreateUserOkResponseDTO,
 	UserBadRequestResponse,
+	UserMapDTO,
 } from '../../dtos';
-import { UserMap } from '../../mappers';
 import { CreateUserService } from './create-user.service';
 
 @ApiTags('users')
@@ -26,7 +25,7 @@ class CreateUserController {
 	@ApiOperation({ summary: 'Route to create a user' })
 	@ApiCreatedResponse({ type: CreateUserOkResponseDTO })
 	@ApiBadRequestResponse({ type: UserBadRequestResponse })
-	async handle(@Body() data: CreateUserDTO): Promise<UserMap> {
+	async handle(@Body() data: CreateUserDTO): Promise<UserMapDTO> {
 		return await this.createUserService.execute(data);
 	}
 }

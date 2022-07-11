@@ -3,7 +3,7 @@ import { STATUS_CODES } from 'http';
 
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 
-import { CreateUserDTO } from '../../dtos';
+import { CreateUserDTO, UserMapDTO } from '../../dtos';
 import { UsersRepository } from '../../infra/prisma/repositories';
 import { UserMap } from '../../mappers';
 import { IUsersRepository } from '../../repositories';
@@ -15,7 +15,7 @@ class CreateUserService {
 		private readonly usersRepository: IUsersRepository
 	) {}
 
-	async execute(data: CreateUserDTO): Promise<UserMap> {
+	async execute(data: CreateUserDTO): Promise<UserMapDTO> {
 		const userExists = await this.usersRepository.findByEmail(data.email);
 
 		if (userExists) {

@@ -2,7 +2,7 @@ import { STATUS_CODES } from 'http';
 
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 
-import { UpdateUserRolesDTO } from '../../dtos';
+import { UpdateUserRolesDTO, UserMapDTO } from '../../dtos';
 import { UsersRepository } from '../../infra/prisma/repositories';
 import { UserAdminMap } from '../../mappers';
 import { IUsersRepository } from '../../repositories';
@@ -14,7 +14,7 @@ class UpdateUserRolesService {
 		private readonly usersRepository: IUsersRepository
 	) {}
 
-	async execute(id: string, roles: UpdateUserRolesDTO): Promise<UserAdminMap> {
+	async execute(id: string, roles: UpdateUserRolesDTO): Promise<UserMapDTO> {
 		const userExists = await this.usersRepository.findById(id);
 
 		if (!userExists) {

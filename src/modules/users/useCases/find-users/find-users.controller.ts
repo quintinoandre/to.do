@@ -1,6 +1,3 @@
-import { Roles } from 'src/modules/auth/decorators';
-import { Role } from 'src/modules/auth/enums';
-
 import { Controller, Get } from '@nestjs/common';
 import {
 	ApiBearerAuth,
@@ -10,6 +7,8 @@ import {
 	ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
+import { Roles } from '../../../auth/decorators';
+import { Role } from '../../../auth/enums';
 import { UserMapDTO, UserUnauthorizedResponse } from '../../dtos';
 import { UserAdminMap } from '../../mappers';
 import { FindUsersService } from './find-users.service';

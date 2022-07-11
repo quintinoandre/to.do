@@ -1,6 +1,6 @@
-import { ITodoEntity } from 'src/modules/todos/entities';
+import { ITodoEntity } from '../../todos/entities';
 
-interface IUserEntity {
+class UserEntity {
 	id: string;
 	name: string;
 	email: string;
@@ -9,4 +9,4 @@ interface IUserEntity {
 	todos?: Array<ITodoEntity>;
 }
 
-export { IUserEntity };
+export { UserEntity };

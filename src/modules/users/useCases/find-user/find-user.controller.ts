@@ -1,6 +1,3 @@
-import { CurrentUser, Roles } from 'src/modules/auth/decorators';
-import { Role } from 'src/modules/auth/enums';
-
 import { Controller, Get } from '@nestjs/common';
 import {
 	ApiBearerAuth,
@@ -10,9 +7,14 @@ import {
 	ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
-import { FindUserOkResponseDTO, UserUnauthorizedResponse } from '../../dtos';
-import { IUserEntity } from '../../entities';
-import { UserMap } from '../../mappers';
+import { CurrentUser, Roles } from '../../../auth/decorators';
+import { Role } from '../../../auth/enums';
+import {
+	FindUserOkResponseDTO,
+	UserMapDTO,
+	UserUnauthorizedResponse,
+} from '../../dtos';
+import { UserEntity } from '../../entities';
 import { FindUserService } from './find-user.service';
 
 @ApiTags('users')
@@ -28,7 +30,7 @@ class FindUserController {
 	})
 	@ApiOkResponse({ type: FindUserOkResponseDTO })
 	@ApiUnauthorizedResponse({ type: UserUnauthorizedResponse })
-	async handle(@CurrentUser() { id }: IUserEntity): Promise<UserMap> {
+	async handle(@CurrentUser() { id }: UserEntity): Promise<UserMapDTO> {
 		return await this.findUserService.execute(id);
 	}
 }

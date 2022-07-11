@@ -1,9 +1,9 @@
-import { CreateTodoDTO, UpdateTodoDTO } from 'src/modules/todos/dtos';
-import { ITodoEntity } from 'src/modules/todos/entities';
-import { ITodosRepository } from 'src/modules/todos/repositories';
-import { PrismaService } from 'src/shared/infra/prisma';
-
 import { Inject, Injectable } from '@nestjs/common';
+
+import { PrismaService } from '../../../../../shared/infra/prisma';
+import { CreateTodoDTO, UpdateTodoDTO } from '../../../dtos';
+import { ITodoEntity } from '../../../entities';
+import { ITodosRepository } from '../../../repositories';
 
 @Injectable()
 class TodosRepository implements ITodosRepository {

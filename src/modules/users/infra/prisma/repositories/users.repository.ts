@@ -1,15 +1,16 @@
 import { hash } from 'bcrypt';
+
+import { Inject, Injectable } from '@nestjs/common';
+
+import { PrismaService } from '../../../../../shared/infra/prisma';
 import {
 	CreateUserDTO,
 	DeleteUserDTO,
+	UpdateUserDTO,
 	UpdateUserRolesDTO,
-} from 'src/modules/users/dtos';
-import { UpdateUserDTO } from 'src/modules/users/dtos';
-import { IUserEntity } from 'src/modules/users/entities';
-import { IUsersRepository } from 'src/modules/users/repositories';
-import { PrismaService } from 'src/shared/infra/prisma';
-
-import { Inject, Injectable } from '@nestjs/common';
+} from '../../../dtos';
+import { UserEntity } from '../../../entities';
+import { IUsersRepository } from '../../../repositories';
 
 @Injectable()
 class UsersRepository implements IUsersRepository {
@@ -18,7 +19,7 @@ class UsersRepository implements IUsersRepository {
 		private readonly prisma: PrismaService
 	) {}
 
-	async create(data: CreateUserDTO): Promise<IUserEntity> {
+	async create(data: CreateUserDTO): Promise<UserEntity> {
 		return await this.prisma.users.create({ data });
 	}
 
@@ -28,22 +29,22 @@ class UsersRepository implements IUsersRepository {
 		return;
 	}
 
-	async findById(id: string): Promise<IUserEntity> {
+	async findById(id: string): Promise<UserEntity> {
 		return await this.prisma.users.findUnique({ where: { id } });
 	}
 
-	async findByEmail(email: string): Promise<IUserEntity> {
+	async findByEmail(email: string): Promise<UserEntity> {
 		return await this.prisma.users.findUnique({ where: { email } });
 	}
 
-	async findAll(): Promise<IUserEntity[]> {
+	async findAll(): Promise<UserEntity[]> {
 		return await this.prisma.users.findMany({
 			include: { todos: true },
 			orderBy: { name: 'asc' },
 		});
 	}
 
-	async updateUser(id: string, data: UpdateUserDTO): Promise<IUserEntity> {
+	async updateUser(id: string, data: UpdateUserDTO): Promise<UserEntity> {
 		const user = await this.findById(id);
 
 		const dataToUpdate: UpdateUserDTO = {};
@@ -87,11 +88,27 @@ class UsersRepository implements IUsersRepository {
 	async updateUserRoles(
 		id: string,
 		{ roles }: UpdateUserRolesDTO
-	): Promise<IUserEntity> {
-		return await this.prisma.users.update({
-			where: { id },
-			data: { roles },
-		});
+	): Promise<UserEntity> {
+		const users = await this.findAll();
+
+		const userToUpdate = users.find((user) => user.id === id);
+
+		if (
+			roles &&
+			roles !== null &&
+			roles !== undefined &&
+			roles.length > 0 &&
+			roles !== userToUpdate.roles
+		) {
+			return await this.prisma.users.update({
+				where: { id },
+				data: { roles },
+			});
+		}
+
+		delete userToUpdate.todos;
+
+		return userToUpdate;
 	}
 }
 

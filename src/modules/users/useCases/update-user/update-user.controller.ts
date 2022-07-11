@@ -1,6 +1,3 @@
-import { CurrentUser, Roles } from 'src/modules/auth/decorators';
-import { Role } from 'src/modules/auth/enums';
-
 import { Body, Controller, Patch } from '@nestjs/common';
 import {
 	ApiBearerAuth,
@@ -10,13 +7,15 @@ import {
 	ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
+import { CurrentUser, Roles } from '../../../auth/decorators';
+import { Role } from '../../../auth/enums';
 import {
 	UpdateUserDTO,
 	UpdateUserOkResponseDTO,
+	UserMapDTO,
 	UserUnauthorizedResponse,
 } from '../../dtos';
-import { IUserEntity } from '../../entities';
-import { UserMap } from '../../mappers';
+import { UserEntity } from '../../entities';
 import { UpdateUserService } from './update-user.service';
 
 @ApiTags('users')
@@ -31,9 +30,9 @@ class UpdateUserController {
 	@ApiOkResponse({ type: UpdateUserOkResponseDTO })
 	@ApiUnauthorizedResponse({ type: UserUnauthorizedResponse })
 	async handle(
-		@CurrentUser() { id }: IUserEntity,
+		@CurrentUser() { id }: UserEntity,
 		@Body() data: UpdateUserDTO
-	): Promise<UserMap> {
+	): Promise<UserMapDTO> {
 		return await this.updateUserService.execute(id, data);
 	}
 }

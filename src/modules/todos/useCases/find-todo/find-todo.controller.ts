@@ -1,7 +1,3 @@
-import { CurrentUser, Roles } from 'src/modules/auth/decorators';
-import { Role } from 'src/modules/auth/enums';
-import { IUserEntity } from 'src/modules/users/entities';
-
 import { Controller, Get, Param } from '@nestjs/common';
 import {
 	ApiBearerAuth,
@@ -12,6 +8,9 @@ import {
 	ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
+import { CurrentUser, Roles } from '../../../auth/decorators';
+import { Role } from '../../../auth/enums';
+import { UserEntity } from '../../../users/entities';
 import {
 	FindTodoDTO,
 	FindTodoOkResponseDTO,
@@ -36,7 +35,7 @@ class FindTodoController {
 	@ApiUnauthorizedResponse({ type: TodoUnauthorizedResponse })
 	@ApiNotFoundResponse({ type: TodoNotFoundResponse })
 	async handle(
-		@CurrentUser() { id: userId }: IUserEntity,
+		@CurrentUser() { id: userId }: UserEntity,
 		@Param() { id }: FindTodoDTO
 	): Promise<ITodoEntity> {
 		return await this.findTodoService.execute(userId, id);

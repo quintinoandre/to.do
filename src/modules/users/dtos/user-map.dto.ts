@@ -1,6 +1,6 @@
-import { ITodoEntity } from 'src/modules/todos/entities';
-
 import { ApiProperty } from '@nestjs/swagger';
+
+import { ITodoEntity } from '../../todos/entities';
 
 class UserMapDTO {
 	@ApiProperty({ example: 'f70a795c-a46b-44a3-a8fe-6ce20a75afae' })

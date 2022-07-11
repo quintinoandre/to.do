@@ -1,7 +1,3 @@
-import { CurrentUser, Roles } from 'src/modules/auth/decorators';
-import { Role } from 'src/modules/auth/enums';
-import { IUserEntity } from 'src/modules/users/entities';
-
 import { Body, Controller, Post } from '@nestjs/common';
 import {
 	ApiBearerAuth,
@@ -11,6 +7,9 @@ import {
 	ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
+import { CurrentUser, Roles } from '../../../auth/decorators';
+import { Role } from '../../../auth/enums';
+import { UserEntity } from '../../../users/entities';
 import {
 	CreateTodoDTO,
 	CreateTodoOkResponseDTO,
@@ -31,7 +30,7 @@ class CreateTodoController {
 	@ApiUnauthorizedResponse({ type: TodoUnauthorizedResponse })
 	@Roles(Role.User)
 	async handle(
-		@CurrentUser() { id: userId }: IUserEntity,
+		@CurrentUser() { id: userId }: UserEntity,
 		@Body() data: CreateTodoDTO
 	): Promise<ITodoEntity> {
 		return await this.createTodoService.execute(userId, data);

@@ -1,8 +1,9 @@
 import { Request } from 'express';
-import { IUserEntity } from 'src/modules/users/entities';
+
+import { UserEntity } from '../../users/entities';
 
 interface ILoginRequestDTO extends Request {
-	user: IUserEntity;
+	user: UserEntity;
 }
 
 export { ILoginRequestDTO };

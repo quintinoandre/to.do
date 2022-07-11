@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { UpdateUserDTO } from '../../dtos';
+import { UpdateUserDTO, UserMapDTO } from '../../dtos';
 import { UsersRepository } from '../../infra/prisma/repositories';
 import { UserMap } from '../../mappers';
 import { IUsersRepository } from '../../repositories';
@@ -12,7 +12,7 @@ class UpdateUserService {
 		private readonly usersRepository: IUsersRepository
 	) {}
 
-	async execute(id: string, data: UpdateUserDTO): Promise<UserMap> {
+	async execute(id: string, data: UpdateUserDTO): Promise<UserMapDTO> {
 		const user = await this.usersRepository.updateUser(id, data);
 
 		return UserMap.toDTO(user);

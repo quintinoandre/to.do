@@ -1,6 +1,3 @@
-import { Roles } from 'src/modules/auth/decorators';
-import { Role } from 'src/modules/auth/enums';
-
 import { Body, Controller, Param, Patch } from '@nestjs/common';
 import {
 	ApiBearerAuth,
@@ -11,14 +8,16 @@ import {
 	ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
+import { Roles } from '../../../auth/decorators';
+import { Role } from '../../../auth/enums';
 import {
 	UpdateUserRolesDTO,
 	UpdateUserRolesIdDTO,
 	UpdateUserRolesOkResponse,
+	UserMapDTO,
 	UserNotFoundResponse,
 	UserUnauthorizedResponse,
 } from '../../dtos';
-import { UserAdminMap } from '../../mappers';
 import { UpdateUserRolesService } from './update-user-roles.service';
 
 @ApiTags('users')
@@ -43,7 +42,7 @@ class UpdateUserRolesController {
 	async handle(
 		@Param() { id }: UpdateUserRolesIdDTO,
 		@Body() roles: UpdateUserRolesDTO
-	): Promise<UserAdminMap> {
+	): Promise<UserMapDTO> {
 		return await this.updateUserRolesService.execute(id, roles);
 	}
 }

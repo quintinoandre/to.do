@@ -1,7 +1,6 @@
-import { PrismaService } from 'src/shared/infra/prisma';
-
 import { Module } from '@nestjs/common';
 
+import { PrismaService } from '../../shared/infra/prisma';
 import { TodosRepository } from './infra/prisma/repositories';
 import {
 	CreateTodoController,

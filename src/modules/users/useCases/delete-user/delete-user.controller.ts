@@ -1,6 +1,3 @@
-import { Roles } from 'src/modules/auth/decorators';
-import { Role } from 'src/modules/auth/enums';
-
 import {
 	Controller,
 	Delete,
@@ -16,6 +13,8 @@ import {
 	ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
+import { Roles } from '../../../auth/decorators';
+import { Role } from '../../../auth/enums';
 import {
 	DeleteUserDTO,
 	UserNotFoundResponse,
