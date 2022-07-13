@@ -18,7 +18,7 @@ import {
 	UpdateTodoIdDTO,
 	UpdateTodoOkResponseDTO,
 } from '../../dtos';
-import { ITodoEntity } from '../../entities';
+import { TodoEntity } from '../../entities';
 import { UpdateTodoService } from './update-todo.service';
 
 @ApiTags('todos')
@@ -39,7 +39,7 @@ class UpdateTodoController {
 		@CurrentUser() { id: userId }: UserEntity,
 		@Param() { id }: UpdateTodoIdDTO,
 		@Body() data: UpdateTodoDTO
-	): Promise<ITodoEntity> {
+	): Promise<TodoEntity> {
 		return await this.updateTodoService.execute(userId, id, data);
 	}
 }

@@ -11,7 +11,7 @@ import { CurrentUser, Roles } from '../../../auth/decorators';
 import { Role } from '../../../auth/enums';
 import { UserEntity } from '../../../users/entities';
 import { FindTodosOkResponseDTO, TodoUnauthorizedResponse } from '../../dtos';
-import { ITodoEntity } from '../../entities';
+import { TodoEntity } from '../../entities';
 import { FindTodosService } from './find-todos.service';
 
 @ApiTags('todos')
@@ -30,7 +30,7 @@ class FindTodosController {
 	@ApiUnauthorizedResponse({ type: TodoUnauthorizedResponse })
 	async handle(
 		@CurrentUser() { id: userId }: UserEntity
-	): Promise<ITodoEntity[]> {
+	): Promise<TodoEntity[]> {
 		return await this.findTodosService.execute(userId);
 	}
 }

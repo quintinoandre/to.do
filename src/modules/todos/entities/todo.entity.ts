@@ -1,4 +1,4 @@
-interface ITodoEntity {
+class TodoEntity {
 	id: string;
 	title: string;
 	done: boolean;
@@ -7,4 +7,4 @@ interface ITodoEntity {
 	userId: string;
 }
 
-export { ITodoEntity };
+export { TodoEntity };

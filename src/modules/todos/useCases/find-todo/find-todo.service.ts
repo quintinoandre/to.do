@@ -2,7 +2,7 @@ import { STATUS_CODES } from 'http';
 
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 
-import { ITodoEntity } from '../../entities';
+import { TodoEntity } from '../../entities';
 import { TodosRepository } from '../../infra/prisma/repositories';
 import { ITodosRepository } from '../../repositories';
 
@@ -13,7 +13,7 @@ class FindTodoService {
 		private readonly todosRepository: ITodosRepository
 	) {}
 
-	async execute(userId: string, id: string): Promise<ITodoEntity> {
+	async execute(userId: string, id: string): Promise<TodoEntity> {
 		const todo = await this.todosRepository.findById(userId, id);
 
 		if (!todo) {

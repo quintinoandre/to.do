@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 
 import { PrismaService } from '../../../../../shared/infra/prisma';
 import { CreateTodoDTO, UpdateTodoDTO } from '../../../dtos';
-import { ITodoEntity } from '../../../entities';
+import { TodoEntity } from '../../../entities';
 import { ITodosRepository } from '../../../repositories';
 
 @Injectable()
@@ -12,15 +12,15 @@ class TodosRepository implements ITodosRepository {
 		private readonly prisma: PrismaService
 	) {}
 
-	async create(userId: string, data: CreateTodoDTO): Promise<ITodoEntity> {
+	async create(userId: string, data: CreateTodoDTO): Promise<TodoEntity> {
 		return await this.prisma.todos.create({ data: { ...data, userId } });
 	}
 
-	async findById(userId: string, id: string): Promise<ITodoEntity> {
+	async findById(userId: string, id: string): Promise<TodoEntity> {
 		return await this.prisma.todos.findFirst({ where: { id, userId } });
 	}
 
-	async findAll(userId: string): Promise<ITodoEntity[]> {
+	async findAll(userId: string): Promise<TodoEntity[]> {
 		return await this.prisma.$queryRaw`
 		SELECT * FROM todos
     WHERE "userId" = ${userId}
@@ -28,7 +28,7 @@ class TodosRepository implements ITodosRepository {
 		`;
 	}
 
-	async findByTitle(userId: string, title: string): Promise<ITodoEntity[]> {
+	async findByTitle(userId: string, title: string): Promise<TodoEntity[]> {
 		return await this.prisma.$queryRaw`
 		SELECT * FROM todos
 		WHERE "userId" = ${userId}
@@ -47,7 +47,7 @@ class TodosRepository implements ITodosRepository {
 		userId: string,
 		id: string,
 		data: UpdateTodoDTO
-	): Promise<ITodoEntity> {
+	): Promise<TodoEntity> {
 		const todo = await this.findById(userId, id);
 
 		const dataToUpdate: UpdateTodoDTO = {};

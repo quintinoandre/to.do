@@ -17,7 +17,7 @@ import {
 	TodoNotFoundResponse,
 	TodoUnauthorizedResponse,
 } from '../../dtos';
-import { ITodoEntity } from '../../entities';
+import { TodoEntity } from '../../entities';
 import { FindTodoService } from './find-todo.service';
 
 @ApiTags('todos')
@@ -37,7 +37,7 @@ class FindTodoController {
 	async handle(
 		@CurrentUser() { id: userId }: UserEntity,
 		@Param() { id }: FindTodoDTO
-	): Promise<ITodoEntity> {
+	): Promise<TodoEntity> {
 		return await this.findTodoService.execute(userId, id);
 	}
 }

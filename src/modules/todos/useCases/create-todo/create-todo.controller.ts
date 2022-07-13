@@ -15,7 +15,7 @@ import {
 	CreateTodoOkResponseDTO,
 	TodoUnauthorizedResponse,
 } from '../../dtos';
-import { ITodoEntity } from '../../entities';
+import { TodoEntity } from '../../entities';
 import { CreateTodoService } from './create-todo.service';
 
 @ApiTags('todos')
@@ -32,7 +32,7 @@ class CreateTodoController {
 	async handle(
 		@CurrentUser() { id: userId }: UserEntity,
 		@Body() data: CreateTodoDTO
-	): Promise<ITodoEntity> {
+	): Promise<TodoEntity> {
 		return await this.createTodoService.execute(userId, data);
 	}
 }

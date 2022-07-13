@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { ITodoEntity } from '../../entities';
+import { TodoEntity } from '../../entities';
 import { TodosRepository } from '../../infra/prisma/repositories';
 import { ITodosRepository } from '../../repositories';
 
@@ -11,7 +11,7 @@ class FindTodosService {
 		private readonly todosRepository: ITodosRepository
 	) {}
 
-	async execute(userId: string): Promise<ITodoEntity[]> {
+	async execute(userId: string): Promise<TodoEntity[]> {
 		return await this.todosRepository.findAll(userId);
 	}
 }

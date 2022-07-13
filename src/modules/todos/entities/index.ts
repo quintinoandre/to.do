@@ -1,1 +1,1 @@
-export * from './itodo.entity';
+export * from './todo.entity';

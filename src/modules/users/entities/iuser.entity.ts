@@ -1,4 +1,4 @@
-import { ITodoEntity } from '../../todos/entities';
+import { TodoEntity } from '../../todos/entities';
 
 class UserEntity {
 	id: string;
@@ -6,7 +6,7 @@ class UserEntity {
 	email: string;
 	password: string;
 	roles: Array<string>;
-	todos?: Array<ITodoEntity>;
+	todos?: Array<TodoEntity>;
 }
 
 export { UserEntity };

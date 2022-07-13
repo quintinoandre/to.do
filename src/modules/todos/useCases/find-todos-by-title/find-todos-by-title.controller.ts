@@ -15,7 +15,7 @@ import {
 	FindTodosByTitleOkResponseDTO,
 	TodoUnauthorizedResponse,
 } from '../../dtos';
-import { ITodoEntity } from '../../entities';
+import { TodoEntity } from '../../entities';
 import { FindTodosByTitleService } from './find-todos-by-title.service';
 
 @ApiTags('todos')
@@ -37,7 +37,7 @@ class FindTodosByTitleController {
 	async handle(
 		@CurrentUser() { id: userId }: UserEntity,
 		@Query() { title }: FindTodosByTitleDTO
-	): Promise<ITodoEntity[]> {
+	): Promise<TodoEntity[]> {
 		return await this.findTodosByTitleService.execute(userId, title);
 	}
 }
