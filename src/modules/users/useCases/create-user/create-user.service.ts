@@ -1,4 +1,5 @@
 import { hash } from 'bcrypt';
+import { isEmail } from 'class-validator';
 import { STATUS_CODES } from 'http';
 
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
@@ -16,6 +17,17 @@ class CreateUserService {
 	) {}
 
 	async execute(data: CreateUserDTO): Promise<UserMapDTO> {
+		if (!data.email || !isEmail(data.email)) {
+			throw new HttpException(
+				{
+					statusCode: HttpStatus.BAD_REQUEST,
+					message: 'email must be an email',
+					error: STATUS_CODES[HttpStatus.BAD_REQUEST],
+				},
+				HttpStatus.BAD_REQUEST
+			);
+		}
+
 		const userExists = await this.usersRepository.findByEmail(data.email);
 
 		if (userExists) {

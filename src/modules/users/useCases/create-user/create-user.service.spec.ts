@@ -6,7 +6,7 @@ import { UsersRepository } from '../../infra/prisma/repositories';
 import { UsersInMemoryRepository } from '../../repositories/in-memory';
 import { CreateUserService } from './create-user.service';
 
-describe('Create User', () => {
+describe('Create User (unit test)', () => {
 	let createUserService: CreateUserService;
 	let user: CreateUserDTO;
 	let createdUser: UserMapDTO;
