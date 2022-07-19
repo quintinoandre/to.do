@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import helmet from 'helmet';
+import * as morgan from 'morgan';
 
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
@@ -17,6 +18,8 @@ async function bootstrap() {
 	app.enableCors();
 
 	app.use(helmet());
+
+	app.use(morgan('dev'));
 
 	app.useGlobalPipes(
 		new ValidationPipe({
