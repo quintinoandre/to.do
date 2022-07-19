@@ -1,6 +1,7 @@
 import { Body, Controller, Param, Patch } from '@nestjs/common';
 import {
 	ApiBearerAuth,
+	ApiForbiddenResponse,
 	ApiNotFoundResponse,
 	ApiOkResponse,
 	ApiOperation,
@@ -14,6 +15,7 @@ import {
 	UpdateUserRolesDTO,
 	UpdateUserRolesIdDTO,
 	UpdateUserRolesOkResponse,
+	UserForbiddenResponse,
 	UserMapDTO,
 	UserNotFoundResponse,
 	UserUnauthorizedResponse,
@@ -38,6 +40,7 @@ class UpdateUserRolesController {
 	})
 	@ApiOkResponse({ type: UpdateUserRolesOkResponse })
 	@ApiUnauthorizedResponse({ type: UserUnauthorizedResponse })
+	@ApiForbiddenResponse({ type: UserForbiddenResponse })
 	@ApiNotFoundResponse({ type: UserNotFoundResponse })
 	async handle(
 		@Param() { id }: UpdateUserRolesIdDTO,

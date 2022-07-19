@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import {
 	ApiBearerAuth,
+	ApiForbiddenResponse,
 	ApiOkResponse,
 	ApiOperation,
 	ApiTags,
@@ -9,7 +10,11 @@ import {
 
 import { Roles } from '../../../auth/decorators';
 import { Role } from '../../../auth/enums';
-import { UserMapDTO, UserUnauthorizedResponse } from '../../dtos';
+import {
+	UserForbiddenResponse,
+	UserMapDTO,
+	UserUnauthorizedResponse,
+} from '../../dtos';
 import { UserAdminMap } from '../../mappers';
 import { FindUsersService } from './find-users.service';
 
@@ -29,6 +34,7 @@ class FindUsersController {
 	})
 	@ApiOkResponse({ type: UserMapDTO, isArray: true })
 	@ApiUnauthorizedResponse({ type: UserUnauthorizedResponse })
+	@ApiForbiddenResponse({ type: UserForbiddenResponse })
 	async handle(): Promise<UserAdminMap> {
 		return await this.findUsersService.execute();
 	}

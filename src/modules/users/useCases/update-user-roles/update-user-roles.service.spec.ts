@@ -9,7 +9,7 @@ import { UsersInMemoryRepository } from '../../repositories/in-memory';
 import { CreateUserService } from '../create-user';
 import { UpdateUserRolesService } from './update-user-roles.service';
 
-describe('Update User Roles', () => {
+describe('Update User Roles (unit test)', () => {
 	let createUserService: CreateUserService;
 	let updateUserRolesService: UpdateUserRolesService;
 	let user: CreateUserDTO;

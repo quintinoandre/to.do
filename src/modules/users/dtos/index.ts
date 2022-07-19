@@ -8,6 +8,7 @@ export * from './update-user-roles-ok-response.dto';
 export * from './update-user-roles.dto';
 export * from './update-user.dto';
 export * from './user-bad-request-response.dto';
+export * from './user-forbidden-response.dto';
 export * from './user-map.dto';
 export * from './user-not-found-response.dto';
 export * from './user-unauthorized-response.dto';

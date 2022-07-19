@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import {
 	ApiBearerAuth,
+	ApiForbiddenResponse,
 	ApiNotFoundResponse,
 	ApiOperation,
 	ApiTags,
@@ -17,6 +18,7 @@ import { Roles } from '../../../auth/decorators';
 import { Role } from '../../../auth/enums';
 import {
 	DeleteUserDTO,
+	UserForbiddenResponse,
 	UserNotFoundResponse,
 	UserUnauthorizedResponse,
 } from '../../dtos';
@@ -38,6 +40,7 @@ class DeleteUserController {
 	`,
 	})
 	@ApiUnauthorizedResponse({ type: UserUnauthorizedResponse })
+	@ApiForbiddenResponse({ type: UserForbiddenResponse })
 	@ApiNotFoundResponse({ type: UserNotFoundResponse })
 	async handle(@Param() id: DeleteUserDTO): Promise<void> {
 		return await this.deleteUserService.execute(id);

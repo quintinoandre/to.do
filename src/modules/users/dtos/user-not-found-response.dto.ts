@@ -7,7 +7,7 @@ class UserNotFoundResponse {
 	@ApiProperty({ example: `User doesn't exist` })
 	message: string;
 
-	@ApiProperty({ example: `Not Found` })
+	@ApiProperty({ example: 'Not Found' })
 	error: string;
 }
 

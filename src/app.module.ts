@@ -3,7 +3,7 @@ import { APP_GUARD } from '@nestjs/core';
 
 import { AuthModule } from './modules/auth';
 import { JwtAuthGuard } from './modules/auth/guards';
-import { RolesGuard } from './modules/auth/guards/roles.guard';
+import { RolesGuard } from './modules/auth/guards';
 import { TodosModule } from './modules/todos';
 import { UsersModule } from './modules/users';
 
