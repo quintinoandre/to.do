@@ -14,7 +14,7 @@ const {
 	env: { JWT_SECRET: secret, JWT_EXPIRES_IN: expiresIn },
 } = process;
 
-describe('Login User', () => {
+describe('Login User (unit test)', () => {
 	let createUserService: CreateUserService;
 	let loginService: LoginService;
 	let user: CreateUserDTO;
