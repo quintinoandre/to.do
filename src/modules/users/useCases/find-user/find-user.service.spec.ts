@@ -34,9 +34,7 @@ describe('Find User (unit test)', () => {
 
 	it('should be able to find a user', async () => {
 		expect(await findUserService.execute(createdUser.id)).toMatchObject({
-			id: expect.any(String),
-			name: user.name,
-			email: user.email,
+			...createdUser,
 		});
 	});
 });

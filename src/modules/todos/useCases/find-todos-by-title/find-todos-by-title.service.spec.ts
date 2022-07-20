@@ -9,7 +9,7 @@ import { TodosInMemoryRepository } from '../../repositories/in-memory';
 import { CreateTodoService } from '../create-todo';
 import { FindTodosByTitleService } from './find-todos-by-title.service';
 
-describe('Find Todos By Title', () => {
+describe('Find Todos By Title (unit test)', () => {
 	let createTodoService: CreateTodoService;
 	let findTodosByTitleService: FindTodosByTitleService;
 	let todo1: CreateTodoDTO;
@@ -48,7 +48,7 @@ describe('Find Todos By Title', () => {
 		createdTodo2 = await createTodoService.execute(userId, todo2);
 	});
 
-	it('should be able to find all todos by title', async () => {
+	it('should be able to find all todos of the user that is logged in, by title', async () => {
 		expect(await findTodosByTitleService.execute(userId, 'go')).toEqual([
 			{ ...createdTodo1 },
 			{ ...createdTodo2 },

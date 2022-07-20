@@ -10,6 +10,7 @@ class CreateTodoDTO {
 
 	@ApiProperty({ example: '2022-07-15T14:42:08.554Z' })
 	@IsString()
+	@IsNotEmpty()
 	@IsOptional()
 	deadline?: Date;
 }

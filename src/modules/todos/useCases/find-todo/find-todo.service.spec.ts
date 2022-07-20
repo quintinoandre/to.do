@@ -10,7 +10,7 @@ import { TodosInMemoryRepository } from '../../repositories/in-memory';
 import { CreateTodoService } from '../create-todo';
 import { FindTodoService } from './find-todo.service';
 
-describe('Find Todo', () => {
+describe('Find Todo (unit test)', () => {
 	let createTodoService: CreateTodoService;
 	let findTodoService: FindTodoService;
 	let todo: CreateTodoDTO;
@@ -40,14 +40,7 @@ describe('Find Todo', () => {
 
 	it('should be able to find a todo', async () => {
 		expect(await findTodoService.execute(userId, createdTodo.id)).toMatchObject(
-			{
-				id: expect.any(String),
-				title: todo.title,
-				done: false,
-				deadline: todo.deadline,
-				createdAt: expect.any(Date),
-				userId: expect.any(String),
-			}
+			{ ...createdTodo }
 		);
 	});
 

@@ -105,9 +105,7 @@ describe('Update User Roles (e2e test)', () => {
 
 		expect(response.status).toBe(HttpStatus.OK);
 		expect(response.body).toMatchObject({
-			id: expect.any(String),
-			name: createdUser.name,
-			email: createdUser.email,
+			...createdUser,
 			roles: dataToUpdate.roles,
 		});
 	});

@@ -7,21 +7,26 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../../../../shared/infra/prisma';
 import { AuthModule } from '../../../auth';
 import { UserTokenDTO } from '../../../auth/dtos';
-import { RolesGuard } from '../../../auth/guards';
-import { JwtAuthGuard } from '../../../auth/guards';
-import { CreateUserDTO, UserMapDTO } from '../../dtos';
-import { UsersModule } from '../../users.module';
+import { JwtAuthGuard, RolesGuard } from '../../../auth/guards';
+import { UsersModule } from '../../../users';
+import { CreateUserDTO, UserMapDTO } from '../../../users/dtos';
+import { TodoEntity } from '../../entities';
+import { TodosModule } from '../../todos.module';
 
-describe('Find User (e2e test)', () => {
+describe('Find Todos By Title (e2e test)', () => {
 	const prisma = new PrismaService();
 	let app: INestApplication;
 	let user: CreateUserDTO;
 	let userAccessToken: UserTokenDTO;
 	let createdUser: UserMapDTO;
+	let todo1;
+	let createdTodo1: TodoEntity;
+	let todo2;
+	let createdTodo2: TodoEntity;
 
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
-			imports: [UsersModule, AuthModule],
+			imports: [UsersModule, TodosModule, AuthModule],
 			providers: [
 				{
 					provide: APP_PIPE,
@@ -37,9 +42,9 @@ describe('Find User (e2e test)', () => {
 		await app.init();
 
 		user = {
-			name: 'Troy Hoffman',
-			email: `urpice@jinsaz.vg`,
-			password: 'scUpGUY7CVFQstn6',
+			name: 'Harvey Duncan',
+			email: `pe@mumdow.km`,
+			password: 'ld3PzZLUr0LnQ485',
 		};
 
 		const createdUserResponse = await request(app.getHttpServer())
@@ -56,26 +61,52 @@ describe('Find User (e2e test)', () => {
 			});
 
 		userAccessToken = userResponse.body.access_token;
+
+		todo1 = {
+			title: 'Todo test 1',
+			deadline: '2022-07-15T14:42:08.554Z',
+		};
+
+		todo2 = {
+			title: 'Todo test 2',
+			deadline: '2022-07-15T14:42:08.554Z',
+		};
+
+		const createdTodo1Response = await request(app.getHttpServer())
+			.post('/todos')
+			.set({ Authorization: `Bearer ${userAccessToken}` })
+			.send(todo1);
+
+		createdTodo1 = createdTodo1Response.body;
+
+		const createdTodo2Response = await request(app.getHttpServer())
+			.post('/todos')
+			.set({ Authorization: `Bearer ${userAccessToken}` })
+			.send(todo2);
+
+		createdTodo2 = createdTodo2Response.body;
 	});
 
 	afterEach(async () => {
+		await prisma.todos.delete({ where: { id: createdTodo1.id } });
+
+		await prisma.todos.delete({ where: { id: createdTodo2.id } });
+
 		await prisma.users.delete({ where: { id: createdUser.id } });
 	});
 
-	it('/users (GET) - should be able to find a user', async () => {
+	it('/todos/bytitle?title=title (GET) - should be able to find all todos of the user that is logged in, by title', async () => {
 		const response = await request(app.getHttpServer())
-			.get('/users')
+			.get('/todos/bytitle?title=test')
 			.set({ Authorization: `Bearer ${userAccessToken}` });
 
 		expect(response.status).toBe(HttpStatus.OK);
-		expect(response.body).toMatchObject({
-			...createdUser,
-		});
+		expect(response.body[1]).toHaveProperty('id');
 	});
 
-	it('/users (GET) - a non authenticated user should not be able to find a user', () => {
+	it('/todos/bytitle?title=title (GET) - a non authenticated user should not be able to find all todos by title', () => {
 		return request(app.getHttpServer())
-			.get('/users')
+			.get('/todos/bytitle?title=test')
 			.expect(HttpStatus.UNAUTHORIZED);
 	});
 });

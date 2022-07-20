@@ -1,4 +1,5 @@
 import * as request from 'supertest';
+import { v4 as uuidV4 } from 'uuid';
 
 import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 import { APP_GUARD, APP_PIPE } from '@nestjs/core';
@@ -7,21 +8,24 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../../../../shared/infra/prisma';
 import { AuthModule } from '../../../auth';
 import { UserTokenDTO } from '../../../auth/dtos';
-import { RolesGuard } from '../../../auth/guards';
-import { JwtAuthGuard } from '../../../auth/guards';
-import { CreateUserDTO, UserMapDTO } from '../../dtos';
-import { UsersModule } from '../../users.module';
+import { JwtAuthGuard, RolesGuard } from '../../../auth/guards';
+import { UsersModule } from '../../../users';
+import { CreateUserDTO, UserMapDTO } from '../../../users/dtos';
+import { TodoEntity } from '../../entities';
+import { TodosModule } from '../../todos.module';
 
-describe('Update User (e2e test)', () => {
+describe('Delete Todo (e2e test)', () => {
 	const prisma = new PrismaService();
 	let app: INestApplication;
 	let user: CreateUserDTO;
 	let userAccessToken: UserTokenDTO;
 	let createdUser: UserMapDTO;
+	let todo;
+	let createdTodo: TodoEntity;
 
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
-			imports: [UsersModule, AuthModule],
+			imports: [UsersModule, TodosModule, AuthModule],
 			providers: [
 				{
 					provide: APP_PIPE,
@@ -37,9 +41,9 @@ describe('Update User (e2e test)', () => {
 		await app.init();
 
 		user = {
-			name: 'Alberta Bass',
-			email: `za@ehelaw.bt`,
-			password: 'v5QROzHUncR8ISVt',
+			name: 'Teresa Young',
+			email: `adow@hena.mr`,
+			password: '2w4L5mFR6ROPzwDT',
 		};
 
 		const createdUserResponse = await request(app.getHttpServer())
@@ -56,67 +60,69 @@ describe('Update User (e2e test)', () => {
 			});
 
 		userAccessToken = userResponse.body.access_token;
+
+		todo = {
+			title: 'Todo test',
+			deadline: '2022-07-15T14:42:08.554Z',
+		};
+
+		const createdTodoResponse = await request(app.getHttpServer())
+			.post('/todos')
+			.set({ Authorization: `Bearer ${userAccessToken}` })
+			.send(todo);
+
+		createdTodo = createdTodoResponse.body;
 	});
 
 	afterEach(async () => {
-		await prisma.users.delete({ where: { id: createdUser.id } });
-	});
-
-	it('/users (PATCH) - should be able to update a user', async () => {
-		const dataToUpdate = {
-			name: 'Henry Stewart',
-			email: `tulhipuju@ga.ao`,
-			password: 'vmxX88mdiVrwMd5C',
-		};
-
-		const response = await request(app.getHttpServer())
-			.patch('/users')
-			.set({ Authorization: `Bearer ${userAccessToken}` })
-			.send(dataToUpdate);
-
-		expect(response.status).toBe(HttpStatus.OK);
-		expect(response.body).toMatchObject({
-			id: createdUser.id,
-			name: dataToUpdate.name,
-			email: dataToUpdate.email,
+		const todo = await prisma.todos.findUnique({
+			where: { id: createdTodo.id },
 		});
+
+		const user = await prisma.users.findUnique({
+			where: { id: createdUser.id },
+		});
+
+		if (todo) {
+			await prisma.todos.delete({ where: { id: createdTodo.id } });
+		}
+
+		if (user) {
+			await prisma.users.delete({ where: { id: createdUser.id } });
+		}
 	});
 
-	it('/users (PATCH) - should not be able to update a user with an wrong type of name', () => {
+	it('/todos/:id (DELETE) - should be able to delete a todo', () => {
 		return request(app.getHttpServer())
-			.patch('/users')
+			.delete(`/todos/${createdTodo.id}`)
 			.set({ Authorization: `Bearer ${userAccessToken}` })
-			.send({ name: 1 })
+			.expect(HttpStatus.NO_CONTENT);
+	});
+
+	it('/todos/:id (DELETE) - should not be able to delete a non existent todo', () => {
+		return request(app.getHttpServer())
+			.delete(`/todos/${uuidV4()}`)
+			.set({ Authorization: `Bearer ${userAccessToken}` })
+			.expect(HttpStatus.NOT_FOUND);
+	});
+
+	it('/todos/:id (DELETE) - should not be able to delete a todo with an wrong type of id', () => {
+		return request(app.getHttpServer())
+			.delete(`/todos/${1}`)
+			.set({ Authorization: `Bearer ${userAccessToken}` })
 			.expect(HttpStatus.BAD_REQUEST);
 	});
 
-	it('/users (PATCH) - should not be able to update a user with an wrong type of email', () => {
+	it('/todos/:id (DELETE) - should not be able to delete a todo without the todo id', () => {
 		return request(app.getHttpServer())
-			.patch('/users')
+			.delete('/todos')
 			.set({ Authorization: `Bearer ${userAccessToken}` })
-			.send({ email: 1 })
-			.expect(HttpStatus.BAD_REQUEST);
+			.expect(HttpStatus.NOT_FOUND);
 	});
 
-	it('/users (PATCH) - should not be able to update a user with an empty email', () => {
+	it('/todos/:id (DELETE) - a non authenticated user should not be able to delete a todo', () => {
 		return request(app.getHttpServer())
-			.patch('/users')
-			.set({ Authorization: `Bearer ${userAccessToken}` })
-			.send({ email: '' })
-			.expect(HttpStatus.BAD_REQUEST);
-	});
-
-	it('/users (PATCH) - should not be able to update a user with an wrong type of password', () => {
-		return request(app.getHttpServer())
-			.patch('/users')
-			.set({ Authorization: `Bearer ${userAccessToken}` })
-			.send({ password: 1 })
-			.expect(HttpStatus.BAD_REQUEST);
-	});
-
-	it('/users (PATCH) - a non authenticated user should not be able to update a user', () => {
-		return request(app.getHttpServer())
-			.patch('/users')
+			.delete(`/todos/${createdTodo.id}`)
 			.expect(HttpStatus.UNAUTHORIZED);
 	});
 });

@@ -1,4 +1,3 @@
-import { hash } from 'bcrypt';
 import * as request from 'supertest';
 import { v4 as uuidV4 } from 'uuid';
 
@@ -9,25 +8,24 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../../../../shared/infra/prisma';
 import { AuthModule } from '../../../auth';
 import { UserTokenDTO } from '../../../auth/dtos';
-import { RolesGuard } from '../../../auth/guards';
-import { JwtAuthGuard } from '../../../auth/guards';
-import { CreateUserDTO, UserMapDTO } from '../../dtos';
-import { UserEntity } from '../../entities';
-import { UsersModule } from '../../users.module';
+import { JwtAuthGuard, RolesGuard } from '../../../auth/guards';
+import { UsersModule } from '../../../users';
+import { CreateUserDTO, UserMapDTO } from '../../../users/dtos';
+import { TodoEntity } from '../../entities';
+import { TodosModule } from '../../todos.module';
 
-describe('Find Users (e2e test)', () => {
+describe('Find Todo (e2e test)', () => {
 	const prisma = new PrismaService();
 	let app: INestApplication;
-	let userAdmin: UserEntity;
 	let user: CreateUserDTO;
-	let adminAccessToken: UserTokenDTO;
 	let userAccessToken: UserTokenDTO;
-	let createdAdminUser: UserMapDTO;
 	let createdUser: UserMapDTO;
+	let todo;
+	let createdTodo: TodoEntity;
 
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
-			imports: [UsersModule, AuthModule],
+			imports: [UsersModule, TodosModule, AuthModule],
 			providers: [
 				{
 					provide: APP_PIPE,
@@ -42,40 +40,17 @@ describe('Find Users (e2e test)', () => {
 
 		await app.init();
 
-		userAdmin = {
-			id: uuidV4(),
-			name: 'Jeremy Townsend',
-			email: `edzolof@itsitle.mc`,
-			password: 'x2XRYQkoqyXd9rg8',
-			roles: ['user', 'admin'],
-		};
-
 		user = {
-			name: 'Laura Lowe',
-			email: `fupito@go.ml`,
-			password: 'gvEOpt2DQNOakbHt',
+			name: 'Susan Klein',
+			email: `vut@saenout.ae`,
+			password: 'CEEDE3GwqdILDTnt',
 		};
-
-		const SALT_OR_ROUNDS = 10;
-
-		const passwordHash = await hash(userAdmin.password, SALT_OR_ROUNDS);
-
-		createdAdminUser = await prisma.users.create({
-			data: { ...userAdmin, password: passwordHash },
-		});
 
 		const createdUserResponse = await request(app.getHttpServer())
 			.post('/users')
 			.send(user);
 
 		createdUser = createdUserResponse.body;
-
-		const adminResponse = await request(app.getHttpServer())
-			.post('/login')
-			.send({
-				email: userAdmin.email,
-				password: userAdmin.password,
-			});
 
 		const userResponse = await request(app.getHttpServer())
 			.post('/login')
@@ -84,36 +59,53 @@ describe('Find Users (e2e test)', () => {
 				password: user.password,
 			});
 
-		adminAccessToken = adminResponse.body.access_token;
-
 		userAccessToken = userResponse.body.access_token;
+
+		todo = {
+			title: 'Todo test',
+			deadline: '2022-07-15T14:42:08.554Z',
+		};
+
+		const createdTodoResponse = await request(app.getHttpServer())
+			.post('/todos')
+			.set({ Authorization: `Bearer ${userAccessToken}` })
+			.send(todo);
+
+		createdTodo = createdTodoResponse.body;
 	});
 
 	afterEach(async () => {
-		await prisma.users.delete({ where: { id: createdAdminUser.id } });
+		await prisma.todos.delete({ where: { id: createdTodo.id } });
 
 		await prisma.users.delete({ where: { id: createdUser.id } });
 	});
 
-	it('/users/all (GET) - should be able to find all users', async () => {
+	it('/todos/:id (GET) - should be able to find a todo', async () => {
 		const response = await request(app.getHttpServer())
-			.get('/users/all')
-			.set({ Authorization: `Bearer ${adminAccessToken}` });
+			.get(`/todos/${createdTodo.id}`)
+			.set({ Authorization: `Bearer ${userAccessToken}` });
 
 		expect(response.status).toBe(HttpStatus.OK);
-		expect(response.body[1]).toHaveProperty('id');
+		expect(response.body).toMatchObject({ ...createdTodo });
 	});
 
-	it('/users/all (GET) - a non admin user should not be able to find all a users', async () => {
+	it('/todos/:id (GET) - should not be able to find a non existent todo', () => {
 		return request(app.getHttpServer())
-			.get('/users/all')
+			.get(`/todos/${uuidV4()}`)
 			.set({ Authorization: `Bearer ${userAccessToken}` })
-			.expect(HttpStatus.FORBIDDEN);
+			.expect(HttpStatus.NOT_FOUND);
 	});
 
-	it('/users/all (GET) - a non authenticated user should not be able to find all users', () => {
+	it('/todos/:id (GET) - should not be able to find a todo with an wrong type of id', () => {
 		return request(app.getHttpServer())
-			.get('/users/all')
+			.get(`/todos/${1}`)
+			.set({ Authorization: `Bearer ${userAccessToken}` })
+			.expect(HttpStatus.BAD_REQUEST);
+	});
+
+	it('/todos/:id (GET) - a non authenticated user should not be able to find a todo', () => {
+		return request(app.getHttpServer())
+			.get(`/todos/${createdTodo.id}`)
 			.expect(HttpStatus.UNAUTHORIZED);
 	});
 });

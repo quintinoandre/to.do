@@ -10,7 +10,7 @@ import { TodosInMemoryRepository } from '../../repositories/in-memory';
 import { CreateTodoService } from '../create-todo';
 import { DeleteTodoService } from './delete-todo.service';
 
-describe('Delete Todo', () => {
+describe('Delete Todo (unit test)', () => {
 	let createTodoService: CreateTodoService;
 	let deleteTodoService: DeleteTodoService;
 	let todo: CreateTodoDTO;

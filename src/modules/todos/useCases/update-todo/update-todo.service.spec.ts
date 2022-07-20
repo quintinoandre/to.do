@@ -10,7 +10,7 @@ import { TodosInMemoryRepository } from '../../repositories/in-memory';
 import { CreateTodoService } from '../create-todo';
 import { UpdateTodoService } from './update-todo.service';
 
-describe('Update Todo', () => {
+describe('Update Todo (unit test)', () => {
 	let createTodoService: CreateTodoService;
 	let updateTodoService: UpdateTodoService;
 	let todo: CreateTodoDTO;

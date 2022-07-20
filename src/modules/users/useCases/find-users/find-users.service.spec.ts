@@ -6,7 +6,7 @@ import { UsersInMemoryRepository } from '../../repositories/in-memory';
 import { CreateUserService } from '../create-user';
 import { FindUsersService } from './find-users.service';
 
-describe('Find Users', () => {
+describe('Find Users (unit test)', () => {
 	let createUserService: CreateUserService;
 	let findUsersService: FindUsersService;
 	let user1: CreateUserDTO;

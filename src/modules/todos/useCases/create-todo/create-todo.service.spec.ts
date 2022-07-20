@@ -8,7 +8,7 @@ import { TodosRepository } from '../../infra/prisma/repositories';
 import { TodosInMemoryRepository } from '../../repositories/in-memory';
 import { CreateTodoService } from './create-todo.service';
 
-describe('Create Todo', () => {
+describe('Create Todo (unit test)', () => {
 	let createTodoService: CreateTodoService;
 	let todo: CreateTodoDTO;
 	let createdTodo: TodoEntity;
